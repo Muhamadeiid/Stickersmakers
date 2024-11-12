@@ -1,0 +1,21 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+   header nav ul li {
+    @apply text-center;
+   } 
+   header nav ul li a {
+    @apply w-full;
+   } 
+   header nav ul li a:hover {
+    @apply transition duration-500 text-mainColor;
+   }
+   .footer-col{
+      @apply flex flex-col w-1/4 text-white;
+   }
+   .footer-col h3{
+      @apply font-bold text-2xl mb-8;
+   }
+    }

@@ -1,0 +1,8 @@
+.active {
+    color: #ff5151;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+.active::selection {
+    color: black;
+    background-color: yellow;
+  }
