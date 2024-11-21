@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { MdLightMode } from "react-icons/md";
 import { BsFillMoonStarsFill } from "react-icons/bs";
-
-
-
 const Darkmode = () => {
     const [theme, setTheme] = useState(
         localStorage.getItem("theme") ? localStorage.getItem("theme") : "dark")
@@ -19,6 +16,7 @@ const Darkmode = () => {
         
     },
     [theme])
+     
   return (
     <>
     

@@ -6,3 +6,18 @@
     color: black;
     background-color: yellow;
   }
+  @media screen and (max-width: 768px) {
+    ul {
+ 
+       }
+    ul li {
+    width: 90%;
+    padding-bottom: 5px;
+    text-align: left;
+    border-bottom: solid #eee 1px;
+   }
+   ul li:nth-child(5) {
+    border-bottom: none;
+   }
+  
+  }

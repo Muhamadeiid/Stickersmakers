@@ -1,0 +1,45 @@
+.trying { 
+  background-image: url('./../../Images/harry potter 2.jpg'); 
+  background-size:cover; 
+  background-position: center;
+  background-attachment: fixed; 
+  background-repeat: no-repeat; 
+  filter: brightness(70%);
+}
+* {
+  transition: 300ms background;
+}
+
+@keyframes fadeIn {
+  0% {
+    transform: translateX(100%);
+    }
+
+  100% {
+    transform: translateX(0%);
+    
+  }
+}
+
+
+@keyframes fadeOut {
+  0% {
+    transform: translateX(0%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+
+  }
+}
+
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out forwards;
+
+}
+
+
+.fade-out {
+  animation: fadeOut 1s ease-in-out forwards;
+}
