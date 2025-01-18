@@ -74,7 +74,7 @@ const Homepage = () => {
                 <h3 className=" font-bold text-lg sm:text-2xl ">HURRY UP!</h3>
                 <h1 className=" font-bold text-2xl sm:text-4xl ">Deal of the Day!</h1>
                 <p className=" font-bold ">But This T-shirt At 20% Discount, Use Code Off20</p>
-                <button type="submit" className="bg-mainColor mt-4 w-44 h-12 text-white rounded-lg">
+                <button type="submit" className="bg-fontColor mt-4 w-44 h-12 text-white rounded-lg">
                   Shop Now
                 </button>
               </div>

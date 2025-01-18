@@ -3,56 +3,68 @@
 @tailwind utilities;
 
 @layer components {
-   header nav ul li {
-    @apply text-center
-   }  
-   header nav ul li svg {
-      @apply text-center
-     } 
-   header nav ul li a {
+  header nav ul li {
+    @apply text-center;
+  }
+  header nav ul li svg {
+    @apply text-center;
+  }
+  header nav ul li a {
     @apply w-full;
-   } 
-   header nav ul li a:hover {
-    @apply  text-mainColor;
-   }
-   .footer-col{
-      @apply flex flex-col lg:w-1/4 sm:w-1/2 w-full text-white sm:mb-14 lg:mb-0;
-   }
-   .footer-col h3{
-      @apply font-bold text-2xl mb-8;
-   }
-   .footer-col ul li{
-      @apply border-none;
-   }
-   .cards .card {
-      @apply flex flex-col bg-white dark:border-[#2e2e2e]  gap-4 justify-center items-center dark:bg-[#2e2e2e] dark:text-white shadow-md dark:shadow-sm dark:shadow-[#2e2e2e] border rounded-lg pb-6
-   }
-   .cards .card img {
-      @apply w-80 h-80 rounded-lg
-   }
-   .cards .card .category {
-      @apply font-light text-fontColor text-sm dark:text-white
-   }
-   .cards .card .product-name {
-      @apply text-fontColor font-semibold dark:text-white
-   }
-   .cards .card .price {
-      @apply font-bold text-sm text-fontColor dark:text-white
-   }
-   .form form input {
-      @apply py-2 px-4 border border-gray-300
-   }
-   .form form input[type="submit"] {
-      @apply w-48 cursor-pointer bg-mainColor text-white rounded mb-10 dark:border-none
-   }
-   .form form textarea {
-      @apply py-2 px-4 border border-gray-300 focus:outline-none focus:border-gray-300 h-40  
-   }
-   .form form input[type="submit"]:hover {
-      @apply scale-105 transition duration-300 
-   }
-   
-   .form form input:focus {
-      @apply  outline-none;
-   }
-    }
+  }
+  /* header nav ul li a:hover {
+    @apply text-mainColor;
+  } */
+  .footer-col {
+    @apply flex flex-col lg:w-1/4 sm:w-1/2 w-full text-white sm:mb-14 lg:mb-0;
+  }
+  .footer-col h3 {
+    @apply font-bold text-2xl mb-8;
+  }
+  .footer-col ul li {
+    @apply border-none;
+  }
+  .cards .card {
+    @apply flex flex-col bg-white dark:border-[#2e2e2e]  gap-4 justify-center items-center dark:bg-[#2e2e2e] dark:text-white shadow-md dark:shadow-sm dark:shadow-[#2e2e2e] border rounded-lg pb-6;
+  }
+  .cards .card img {
+    @apply w-80 h-80 rounded-lg;
+  }
+  .cards .card .category {
+    @apply font-light text-fontColor text-sm dark:text-white;
+  }
+  .cards .card .product-name {
+    @apply text-fontColor font-semibold dark:text-white;
+  }
+  .cards .card .price {
+    @apply font-bold text-sm text-fontColor dark:text-white;
+  }
+  .form form input {
+    @apply py-2 px-4 border border-gray-300;
+  }
+  .form form input[type="submit"] {
+    @apply w-48 cursor-pointer bg-fontColor text-white rounded mb-10 dark:border-none;
+  }
+  .form form textarea {
+    @apply py-2 px-4 border border-gray-300 focus:outline-none focus:border-gray-300 h-40;
+  }
+  .form form input[type="submit"]:hover {
+    @apply scale-105 transition duration-300;
+  }
+
+  .form form input:focus {
+    @apply outline-none;
+  }
+  .about-box {
+    @apply flex flex-col  sm:h-[180px] w-[255px]  gap-2;
+  }
+  .about-box svg {
+    @apply text-mainColor;
+  }
+  .about-box h1 {
+    @apply text-lg font-bold text-fontColor dark:text-white;
+  }
+  .about-box p {
+    @apply text-fontColor text-sm max-w-[220px] md:w-full leading-6 dark:text-white;
+  }
+}

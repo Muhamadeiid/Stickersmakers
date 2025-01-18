@@ -1,6 +1,7 @@
 .active {
-    color: #ff5151;
     transition: color 0.3s ease, transform 0.3s ease;
+    font-weight: bold;
+    font-size: 20px;
 }
 .active::selection {
     color: black;

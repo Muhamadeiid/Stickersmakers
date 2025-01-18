@@ -36,11 +36,11 @@ const ContactPage = () => {
             </div>
             <div className="flex flex-col gap-4 z-50">
               <div className="flex gap-4 text-fontColor">
-                <IoCall size={24} fill="#ff5151" />
+                <IoCall size={24} fill="#415161" />
                 <p className="dark:text-white">info@example.com</p>
               </div>
               <div className="flex gap-4 text-fontColor">
-                <FaEnvelope size={24} fill="#ff5151" />
+                <FaEnvelope size={24} fill="#415161" />
                 <p className="dark:text-white">123-456-7890/91</p>
               </div>
             </div>
@@ -49,11 +49,11 @@ const ContactPage = () => {
             <h1 className="dark:text-white text-4xl font-bold text-fontColor">
               Ask Your Queries
             </h1>
-            <form action="" className="flex flex-col gap-6">
-              <input type="text" placeholder="Your Email" name="email" />
-              <input type="text" placeholder="Subject" name="subject" />
+            <form action="http://127.0.0.1:8000/api/inquire" method="post" className="flex flex-col gap-6">
+              <input type="text" placeholder="Your Email" name="name" />
+              <input type="text" placeholder="Subject" name="phone" />
               <textarea
-                name="comment"
+                name="message"
                 className=""
                 placeholder="Leave a comment..."
               />

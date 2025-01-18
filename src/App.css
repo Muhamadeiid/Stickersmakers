@@ -5,6 +5,3 @@
     scroll-behavior: smooth;
 
 }
-*::selection {
-    background: #ff5151;
-}
