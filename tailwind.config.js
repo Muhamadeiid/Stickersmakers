@@ -9,7 +9,8 @@ module.exports = {
       colors: {
         "mainColor" : "#ff5151",
         "fontColor" : "#415161",
-        "darkColor" : "#121212",
+        "darkColor" : "#111827",
+        "darkShadow" : "#2b3343"
       },
     },
   },

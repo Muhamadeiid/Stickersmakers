@@ -35,21 +35,27 @@ const ContactPage = () => {
               </p>
             </div>
             <div className="flex flex-col gap-4 z-50">
-              <div className="flex gap-4 text-fontColor">
-                <IoCall size={24} fill="#415161" />
+              <div className="flex gap-4 dark:text-white text-fontColor">
+                <IoCall size={24} />
                 <p className="dark:text-white">info@example.com</p>
               </div>
-              <div className="flex gap-4 text-fontColor">
-                <FaEnvelope size={24} fill="#415161" />
-                <p className="dark:text-white">123-456-7890/91</p>
+              <div className="flex gap-4 dark:text-white text-fontColor">
+                <FaEnvelope size={24} />
+                <p className="dark:text-white fill-fontColor dark:fill-white">
+                  123-456-7890/91
+                </p>
               </div>
             </div>
           </motion.div>
-          <div className="form md:w-1/2 w-full dark:shadow-[#2e2e2e] rounded-2xl shadow-lg p-12 flex flex-col gap-8">
+          <div className="form md:w-1/2 w-full dark:shadow-darkShadow rounded-2xl shadow-lg p-12 flex flex-col gap-8">
             <h1 className="dark:text-white text-4xl font-bold text-fontColor">
               Ask Your Queries
             </h1>
-            <form action="http://127.0.0.1:8000/api/inquire" method="post" className="flex flex-col gap-6">
+            <form
+              action="http://127.0.0.1:8000/api/inquire"
+              method="post"
+              className="flex flex-col gap-6"
+            >
               <input type="text" placeholder="Your Email" name="name" />
               <input type="text" placeholder="Subject" name="phone" />
               <textarea

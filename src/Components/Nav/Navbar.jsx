@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <>
       <header
-        className={menu?" z-50 w-full h-[15vh] shadow-lg   bg-white dark:bg-[#2e2e2e] dark:text-white flex justify-center items-center gap-8":" shadow-lg  bg-white dark:bg-[#2e2e2e] dark:text-white h-[15vh]  flex justify-center items-center gap-8"}
+        className={menu?" z-50 w-full h-[15vh] shadow-lg   bg-white dark:bg-[#1f2937] dark:text-white flex justify-center items-center gap-8":" shadow-lg  bg-white dark:bg-[#1f2937] dark:text-white h-[15vh]  flex justify-center items-center gap-8"}
 
       >
         <div>
@@ -36,7 +36,7 @@ const Navbar = () => {
             <ul
               className={
                 menu
-                  ? "absolute z-50 bg-white dark:bg-[#2e2e2e] dark:text-white flex flex-col items-start pl-4 left-0 top-[15vh] h-[300px] w-full  gap-4"
+                  ? "absolute z-50 bg-white dark:bg-[#1f2937] dark:text-white flex flex-col items-start pl-4 left-0 top-[15vh] h-[300px] w-full  gap-4"
                   : " md:flex items-center gap-8 hidden"
               }
             >

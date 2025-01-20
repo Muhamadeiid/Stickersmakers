@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import first from "../../Images/Background image.jpg";
+import first from "../../Images/Backgroundimage.jpg";
 import second from "../../Images/second Background Image.jpg";
 import third from "../../Images/third Background.png";
 import "./Homepage.css";
@@ -47,7 +47,7 @@ const Sliding = () => {
           <div className="absolute h-full w-full z-10 opacity-50 bg-black"></div>
           <div className="absolute h-full w-full">
             <img
-              className={`absolute h-full w-full transition-opacity ${
+              className={`absolute h-full w-full transition-opacity object-cover ${
                 nextImage !== null ? "fade-out" : ""
               }`}
               src={backgrounds[currentImage]}
@@ -55,7 +55,7 @@ const Sliding = () => {
             />
             {nextImage !== null && (
               <img
-                className="absolute h-full w-full transition-opacity fade-in"
+                className="absolute h-full w-full transition-opacity fade-in object-cover"
                 src={backgrounds[nextImage]}
                 alt="next background"
               />

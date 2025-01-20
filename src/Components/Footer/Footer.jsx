@@ -9,7 +9,7 @@ import { IoCall } from "react-icons/io5";
 const Footer = () => {
   return (
     <>
-      <footer className="dark:bg-[#2e2e2e] bg-[#415161] w-full flex justify-center py-10">
+      <footer className="dark:bg-[#1f2937] bg-[#415161] w-full flex justify-center py-10">
         <div className="z-50 w-11/12 flex sm:flex-row flex-col gap-10 sm:gap-0 sm:flex-wrap">
           <div className="footer-col h-40 align-top flex justify-start items-start relative sm:-top-10">
             <Link to="/">

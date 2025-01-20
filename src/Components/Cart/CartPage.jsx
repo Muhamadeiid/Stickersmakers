@@ -4,7 +4,8 @@ import Navbar from '../Nav/Navbar'
 
 const CartPage = () => {
   return (
-    <>
+    <> 
+    {/* object-cover	 */}
       <Navbar />
       <Footer />
     </>

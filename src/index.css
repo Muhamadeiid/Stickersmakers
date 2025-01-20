@@ -25,7 +25,7 @@
     @apply border-none;
   }
   .cards .card {
-    @apply flex flex-col bg-white dark:border-[#2e2e2e]  gap-4 justify-center items-center dark:bg-[#2e2e2e] dark:text-white shadow-md dark:shadow-sm dark:shadow-[#2e2e2e] border rounded-lg pb-6;
+    @apply flex flex-col bg-white dark:border-[#E5E7EB]  gap-4 justify-center items-center dark:bg-darkColor dark:text-white shadow-md dark:shadow-sm  border rounded-lg pb-6;
   }
   .cards .card img {
     @apply w-80 h-80 rounded-lg;
@@ -66,5 +66,39 @@
   }
   .about-box p {
     @apply text-fontColor text-sm max-w-[220px] md:w-full leading-6 dark:text-white;
+  }
+
+  .form-div {
+    @apply w-full flex flex-col justify-center items-start mx-auto gap-1;
+  }
+  .form-div label {
+    @apply text-fontColor text-sm font-bold dark:text-white;
+  }
+  .form-div input[type="text"] {
+    @apply text-fontColor w-full border border-[#ddd] rounded-md px-4 py-2 dark:shadow-[#2e2e2e] shadow;
+  }
+  .form-div input[type="text"]:focus {
+    @apply outline-none;
+  }
+  .form-div textarea {
+    @apply w-full  text-fontColor border border-[#ddd] rounded-md px-4 py-1 dark:text-white dark:shadow-[#2e2e2e] shadow;
+  }
+  .form-div textarea {
+    @apply outline-none;
+  }
+  input[type="file"]::file-selector-button {
+    @apply border-none rounded-lg bg-fontColor text-white cursor-pointer px-2 py-1 text-sm w-32 h-8 mr-4;
+  }
+  .register-form div {
+    @apply w-full flex items-center;
+  }
+  .register-form div label {
+    @apply w-1/4 font-bold text-sm;
+  }
+  .register-form div input {
+    @apply w-3/4 border px-4 py-1 rounded;
+  }
+  .register-form div input:focus {
+    @apply outline-none;
   }
 }
