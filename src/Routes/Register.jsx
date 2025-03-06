@@ -1,10 +1,10 @@
 import React from 'react'
-import RegisterPage from '../Components/Admin/RegisterPage'
+import LoginPage from '../Components/Admin/LoginPage'
 
 const Register = () => {
   return (
     <>
-      <RegisterPage />
+      <LoginPage />
     </>
   )
 }

@@ -14,7 +14,7 @@ const AboutPage = () => {
       <Navbar />
       <section className="w-full py-32 flex justify-center items-center dark:bg-darkColor bg-[#f5f6f7]">
         <div className="flex flex-col items-center justify-center gap-8 text-fontColor dark:text-white ">
-          <h1 className=" font-bold md:text-6xl ">About Us</h1>
+          <h1 className=" font-bold text-4xl md:text-6xl ">About Us</h1>
           <p className=" text-base max-w-[600px] text-center">
             Founded in 2020, Stickers Makers has been dedicated to providing
             high-quality and durable stickers for personalizing your workspace.
@@ -22,7 +22,7 @@ const AboutPage = () => {
           </p>
         </div>
       </section>
-      <section className="px-20 dark:bg-darkColor flex lg:flex-row flex-col gap-12 py-16 md:py-28 justify-center ">
+      <section className="px-20 dark:bg-darkColor flex lg:flex-row flex-col gap-12 py-16 md:py-24  justify-center ">
         <div className="lg:w-1/3 w-full text-fontColor  dark:text-white ">
           <h1 className="text-3xl mb-6 font-bold">
             What We Deliver<br />

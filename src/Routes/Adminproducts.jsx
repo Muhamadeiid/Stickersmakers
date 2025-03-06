@@ -1,4 +1,4 @@
-import Showproducts from '../Components/Admin/Showproducts'
+import Showproducts from '../Components/Admin/Dashboard'
 
 const Adminproducts = () => {
   return (

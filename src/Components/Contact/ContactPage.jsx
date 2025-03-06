@@ -1,11 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
 import { IoCall } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 const ContactPage = () => {
+  const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+
+  const [formData, setFormData] = useState({
+    name: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setErrors({});
+    setSuccessMessage("");
+
+    axios
+      .post("http://127.0.0.1:8000/api/inquire", formData)
+      .then((response) => {
+        setSuccessMessage(response.data.message);
+        setFormData({ name: "", phone: "", message: "" });
+      })
+      .catch((error) => {
+        if (error.response?.status === 422) {
+          setErrors(error.response.data.errors);
+        } else {
+          console.error("Submission Error:", error);
+        }
+      });
+  };
   return (
     <>
       <Navbar />
@@ -52,18 +86,44 @@ const ContactPage = () => {
               Ask Your Queries
             </h1>
             <form
-              action="http://127.0.0.1:8000/api/inquire"
+              onSubmit={handleSubmit}
               method="post"
               className="flex flex-col gap-6"
             >
-              <input type="text" placeholder="Your Email" name="name" />
-              <input type="text" placeholder="Subject" name="phone" />
+              <input
+                type="text"
+                placeholder="Your Name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                autoComplete="off"
+              />
+              {errors.name && <p className="text-red-500">{errors.name[0]}</p>}
+              <input
+                type="text"
+                placeholder="Your Phone Number"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                autoComplete="off"
+              />
+              {errors.phone && (
+                <p className="text-red-500">{errors.phone[0]}</p>
+              )}
               <textarea
                 name="message"
+                value={formData.message}
+                onChange={handleChange}
                 className=""
                 placeholder="Leave a comment..."
               />
+              {errors.message && (
+                <p className="text-red-500">{errors.message[0]}</p>
+              )}
               <input type="submit" value="Send Message" />
+              {successMessage && (
+                <p className="text-green-600 mb-2">{successMessage}</p>
+              )}
             </form>
           </div>
         </div>

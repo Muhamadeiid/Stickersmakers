@@ -7,6 +7,20 @@ import "./Homepage.css";
 import { motion } from "framer-motion";
 import Loki from "../../Images/loki.jpg";
 import Sliding from "./Sliding";
+import cat from "../../Images/cat.png"
+import logo from "../../Images/logo.png"
+import onepiece from "../../Images/one piece.png"
+import stickers from "../../Images/second Background Image.jpg"
+import leon from "../../Images/leon poster.png"
+import stich from "../../Images/stich.png"
+import simpson from "../../Images/the simpson.png"
+import godfather from "../../Images/the godfather.png"
+import rick from "../../Images/rick&morty.png"
+import pizza from "../../Images/pizza.png"
+import boom from "../../Images/boom.png"
+import hp from "../../Images/harry potter.png"
+import captain from "../../Images/captain america.png"
+
 
 const Homepage = () => {
   const scrollRef = useRef(null);
@@ -15,7 +29,20 @@ const Homepage = () => {
     
     <div className=" dark:bg-darkColor -z-20">
       <Navbar />
-      <Sliding />
+      {/* <Sliding /> */}
+      <section className="hero w-full h-[80vh] mb-20 bg-gradient-to-l from-slate-400 to-slate-200 dark:from-slate-700 dark:to-slate-900 relative">
+        <img src={cat} alt="" className="w-60 absolute right-8 top-16"/>
+        <img src={onepiece} alt="" className="w-60 absolute right-4 bottom-20" />
+        <img src={pizza} alt="" className="w-60 absolute right-[630px] top-4 z-10" />
+        <img src={rick} alt="" className="w-60 absolute right-[450px] top-[20px]" />
+        <img src={godfather} alt="" className="w-60 absolute right-[220px] -top-10" />
+        <img src={simpson} alt="" className="w-60 absolute right-2/3 bottom-20" />
+        <img src={stich} alt="" className="w-60 absolute right-[450px] bottom-8 z-10" />
+        <img src={leon} alt="" className="w-60 absolute right-[610px] bottom-4" />
+        <img src={hp} alt="" className="w-60 absolute right-[250px] bottom-[230px]" />
+        <img src={boom} alt="" className="w-60 absolute right-[250px] bottom-[70px]" />
+        <img src={captain} alt="" className="w-60 absolute right-[160px] bottom-[10px]" />
+      </section>
       <section className="features dark:bg-darkColor flex flex-col items-center gap-20 justify-center mb-20 ">
         <div className="flex flex-col justify-center items-center">
         <h1 className="text-4xl dark:text-white font-bold mb-8 text-fontColor">

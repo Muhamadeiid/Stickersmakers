@@ -4,7 +4,7 @@
 
 @layer components {
   header nav ul li {
-    @apply text-center;
+    @apply text-center h-full;
   }
   header nav ul li svg {
     @apply text-center;
@@ -101,4 +101,26 @@
   .register-form div input:focus {
     @apply outline-none;
   }
+  .products-btns button {
+    @apply w-[140px] h-12 rounded-full bg-fontColor text-sm text-white font-bold
+  }
+  .products-btns button:hover {
+    @apply scale-105
+  }
+  .card .onhover button {
+    @apply bg-white w-10 h-10 rounded-full flex justify-center items-center hover:bg-[#FA8232]
+  }
+  .card .onhover button {
+    @apply  bg-white  w-10 h-10 rounded-full flex justify-center items-center hover:bg-[#FA8232]
+  }
+  .card .onhover svg {
+    @apply flex 
+  }
+  .side-bar .products-btn .cat {
+    @apply flex gap-6
+  }
+  .side-bar .products-btn div label {
+    @apply text-sm font-medium leading-5 font-sans text-fontColor dark:text-white
+  }
 }
+

@@ -1,0 +1,67 @@
+import React, { createContext, useState, useEffect } from "react";
+
+// Load wishlist from local storage
+const loadWishlistFromLocalStorage = () => {
+  try {
+    const serializedWishlist = localStorage.getItem("wishlist");
+    if (serializedWishlist === null) {
+      return []; // Return an empty array if no wishlist is found
+    }
+    return JSON.parse(serializedWishlist);
+  } catch (error) {
+    console.error("Error loading wishlist from local storage:", error);
+    return [];
+  }
+};
+
+// Save wishlist to local storage
+const saveWishlistToLocalStorage = (wishlist) => {
+  try {
+    const serializedWishlist = JSON.stringify(wishlist);
+    localStorage.setItem("wishlist", serializedWishlist);
+  } catch (error) {
+    console.error("Error saving wishlist to local storage:", error);
+  }
+};
+
+// Create the Wishlist Context
+export const WishlistContext = createContext();
+
+// Create the Wishlist Provider
+export const WishlistProvider = ({ children }) => {
+  const [wishlist, setWishlist] = useState(loadWishlistFromLocalStorage());
+
+  // Save wishlist to local storage whenever it changes
+  useEffect(() => {
+    saveWishlistToLocalStorage(wishlist);
+  }, [wishlist]);
+
+  // Add a product to the wishlist
+  const addToWishlist = (product) => {
+    setWishlist((prevWishlist) => {
+      const existingItem = prevWishlist.find((item) => item.id === product.id);
+      if (!existingItem) {
+        return [...prevWishlist, product]; 
+      }
+      return prevWishlist; 
+    });
+  };
+
+  const removeFromWishlist = (productId) => {
+    setWishlist((prevWishlist) =>
+      prevWishlist.filter((item) => item.id !== productId)
+    );
+  };
+
+  const isProductInWishlist = (productId) => {
+    return wishlist.some((item) => item.id === productId);
+  };
+
+  return (
+    <WishlistContext.Provider
+      value={{ wishlist, addToWishlist, removeFromWishlist, isProductInWishlist }}
+    >
+      {children}
+    </WishlistContext.Provider>
+  );
+};
