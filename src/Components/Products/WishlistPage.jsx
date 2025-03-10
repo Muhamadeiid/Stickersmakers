@@ -17,27 +17,27 @@ const WishlistPage = () => {
 
           <div className="products w-full flex flex-wrap gap-4 mx-auto justify-center text-center">
             {wishlist.length === 0 ? (
-              <p className="text-gray-600 text-lg">Your wishlist is empty.</p>
+              <p className="text-gray-600 text-lg dark:text-white">Your wishlist is empty.</p>
             ) : (
               wishlist.map((item) => (
                 <div
-                  className="card dark:border dark:border-gray-700 dark:rounded group w-[260px] h-[420px] gap-4 p-4 shadow rounded-sm flex flex-col items-center"
+                  className="card dark:bg-darkColor dark:border dark:border-gray-700 dark:rounded group w-[280px] h-[420px] sm:w-[234px] sm:h-[320px] gap-4 p-4 shadow rounded-sm flex flex-col items-center"
                   key={item.id}
                 >
-                  <div className="w-full h-[180px] relative overflow-hidden">
+                  <div className="w-full h-[200px] relative overflow-hidden">
                     <img
                       className="w-full h-[180px] object-cover"
                       src={`http://127.0.0.1:8000${item.image.url}`}
                       alt={item.name}
                     />
                   </div>
-                  <h1 className="text-fontColor font-bold text-sm dark:text-white">
+                  <h1 className="text-fontColor h-6 font-bold text-sm dark:text-white">
                     {item.name}
                   </h1>
                   <h1 className="text-fontColor font-normal text-sm dark:text-white">
                     {item.category}
                   </h1>
-                  <h1 className="text-fontColor font-bold text-xs dark:text-white">
+                  <h1 className="text-fontColor font-bold text-xs dark:text-white line-clamp-2 overflow-clip">
                     {item.description}
                   </h1>
 

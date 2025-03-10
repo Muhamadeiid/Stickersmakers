@@ -59,7 +59,8 @@ const Showproducts = () => {
   };
 
   return (
-    <>
+    <div className="dark:bg-darkColor">
+
       <Navbar />
       <div className="p-4">
         <div className="hidden md:block overflow-x-auto shadow-md sm:rounded-lg">
@@ -227,7 +228,7 @@ const Showproducts = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

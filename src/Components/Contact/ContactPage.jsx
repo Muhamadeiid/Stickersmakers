@@ -42,12 +42,11 @@ const ContactPage = () => {
   };
   return (
     <>
-      <Navbar />
       <section className=" dark:bg-darkColor w-full flex justify-center items-center px-8 pt-20 pb-24 ">
         <div className=" md:w-10/12 w-11/12 flex md:flex-row flex-col gap-8 justify-center items-center">
           <motion.div
             initial={{
-              transform: "translateY(-1800px)",
+              transform: "translateY(-1000px)",
             }}
             animate={{
               transform: "translateY(0px)",
@@ -64,19 +63,21 @@ const ContactPage = () => {
                 Say Hello.
               </h1>
               <p className="dark:text-white text-fontColor md:max-w-[500px] max-w-[800px]">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit
-                tellus, luctus nec ullamcorper mattis, pulvinar dapibus leo.
+                We’d love to hear from you! Whether you have a question,<br/> need
+                assistance, or just want to share your thoughts, our team is
+                here to help. Reach out to us anytime.<br/>We’re always ready to
+                connect.
               </p>
             </div>
             <div className="flex flex-col gap-4 z-50">
               <div className="flex gap-4 dark:text-white text-fontColor">
                 <IoCall size={24} />
-                <p className="dark:text-white">info@example.com</p>
+                <p className="dark:text-white">+201155180024</p>
               </div>
               <div className="flex gap-4 dark:text-white text-fontColor">
                 <FaEnvelope size={24} />
                 <p className="dark:text-white fill-fontColor dark:fill-white">
-                  123-456-7890/91
+                  makersstickers@gmail.com
                 </p>
               </div>
             </div>
@@ -128,7 +129,6 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
-      <Footer />
     </>
   );
 };

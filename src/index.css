@@ -25,13 +25,13 @@
     @apply border-none;
   }
   .cards .card {
-    @apply flex flex-col bg-white dark:border-[#E5E7EB]  gap-4 justify-center items-center dark:bg-darkColor dark:text-white shadow-md dark:shadow-sm  border rounded-lg pb-6;
+    @apply flex flex-col bg-white dark:border-[#E5E7EB]  gap-4 justify-center items-center dark:bg-darkColor dark:text-white shadow-md dark:shadow-sm  border rounded-lg pb-6 text-center;
   }
   .cards .card img {
     @apply w-80 h-80 rounded-lg;
   }
   .cards .card .category {
-    @apply font-light text-fontColor text-sm dark:text-white;
+    @apply font-semibold text-fontColor text-sm dark:text-white;
   }
   .cards .card .product-name {
     @apply text-fontColor font-semibold dark:text-white;

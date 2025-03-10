@@ -13,6 +13,7 @@ import axios from "axios";
 import SingleProduct from "./Routes/SingleProduct";
 import Wishlist from "./Routes/Wishlist";
 import NotFoundPage from "./Routes/NotFoundPage";
+import DMs from "./Routes/DMs";
 
 
 
@@ -25,6 +26,7 @@ function App() {
     <Route path="/contact" element={<Contact />} />
     <Route path="/dashboard" element={<AuthRoute component={Adminproducts} />} />
     <Route path="/addproduct" element={<AuthRoute component={Addproduct} />} />
+    <Route path="/inquires" element={<AuthRoute component={DMs} />} />
     <Route path="/login" element={<Register />} />
     <Route path="/wishlist" element={<Wishlist />} />
     <Route path="/products/:id" element={<SingleProduct />} />

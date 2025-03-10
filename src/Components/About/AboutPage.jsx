@@ -14,8 +14,8 @@ const AboutPage = () => {
       <Navbar />
       <section className="w-full py-32 flex justify-center items-center dark:bg-darkColor bg-[#f5f6f7]">
         <div className="flex flex-col items-center justify-center gap-8 text-fontColor dark:text-white ">
-          <h1 className=" font-bold text-4xl md:text-6xl ">About Us</h1>
-          <p className=" text-base max-w-[600px] text-center">
+          <h1 className="font-bold text-4xl md:text-6xl ">About Us</h1>
+          <p className=" text-base max-w-[600px] px-2 text-center">
             Founded in 2020, Stickers Makers has been dedicated to providing
             high-quality and durable stickers for personalizing your workspace.
             Order your favorite sticker now!
@@ -69,15 +69,15 @@ const AboutPage = () => {
         </div>
       </section>
       <section className="w-full flex justify-around bg-fontColor dark:bg-darkColor text-white py-10">
-        <h1 className="text-4xl font-bold">
+        <h1 className="md:text-4xl text-sm font-bold">
           Get Best Price On Customized Designs!
         </h1>
-        <button className=" border-2 text-sm font-bold w-40 rounded-lg">
-          <Link to="/products">GET STARTED</Link>
+        <button className=" border-2 text-xs md:text-lg md:font-bold md:w-40 w-24 rounded-lg">
+          <Link to="/contact">GET STARTED</Link>
         </button>
       </section>
-      <section className="w-full text-fontColor flex justify-evenly items-center dark:text-white dark:bg-darkColor px-20 py-40">
-        <div className="flex flex-col gap-12 w-1/3">
+      <section className="w-full text-fontColor flex flex-col gap-10 md:flex-row md:justify-evenly justify-center items-center dark:text-white dark:bg-darkColor md:px-20 py-12 md:py-40">
+        <div className="flex flex-col gap-12 md:w-1/3 w-full px-4">
           <h1 className=" text-start text-3xl font-bold">Best Quality</h1>
           <div className="flex gap-16">
             <div className="flex flex-col gap-4">
@@ -92,7 +92,7 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
-        <div className="w-1/3 flex flex-col gap-16 font-bold">
+        <div className="md:w-1/3 w-full px-4 flex flex-col gap-16 font-bold">
           <div className="flex gap-6 justify-start items-center">
             <MdArrowRight className="text-mainColor" size={24} />
             <h4>We Can Custom Design Your ideas</h4>

@@ -19,13 +19,14 @@ const Footer = () => {
           <div className="footer-col">
             <h3>Custom Print Store</h3>
             <div className="flex w-full gap-8">
-              <FaFacebookSquare
+              <Link to="https://www.facebook.com/stickersmakers1"><FaFacebookSquare
                 className="cursor-pointer"
                 size={24}
                 fill="white"
-              />
-              <FaInstagram className="cursor-pointer" size={24} fill="white" />
-              <AiFillTikTok className="cursor-pointer" size={24} fill="white" />
+              /></Link>
+              <Link to="https://www.instagram.com/stickersmakers1/"><FaInstagram className="cursor-pointer" size={24} fill="white" /></Link>
+              <Link><AiFillTikTok className="cursor-pointer" size={24} fill="white" /></Link>
+              
             </div>
           </div>
           <div className="footer-col">
@@ -33,11 +34,11 @@ const Footer = () => {
             <div className="flex flex-col gap-4">
               <div className="flex gap-4 text-fontColor">
                 <IoCall size={24} fill="white" />
-                <p className="text-white">info@example.com</p>
+                <p className="text-white">+201155180024</p>
               </div>
               <div className="flex gap-4 text-fontColor">
                 <FaEnvelope size={24} fill="white" />
-                <p className="text-white">123-456-7890/91</p>
+                <p className="text-white">makersstickers@gmail.com</p>
               </div>
             </div>
           </div>
@@ -57,7 +58,7 @@ const Footer = () => {
                 <Link to="/contact">Contact Us</Link>
               </li>
               <li>
-                <Link to="/cart">Your Wishlist</Link>
+                <Link to="/wishlist">Your Wishlist</Link>
               </li>
             </ul>
           </div>

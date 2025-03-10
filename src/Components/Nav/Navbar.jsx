@@ -9,6 +9,10 @@ import logo from "../../Images/logo.png";
 import { motion } from "framer-motion";
 import { useContext } from "react";
 import { WishlistContext } from "../Context/WishlistContext";
+import { IoMdMail } from "react-icons/io";
+import { IoIosLogOut } from "react-icons/io";
+
+
 
 const Navbar = () => {
   const [menu, setMenu] = useState(false);
@@ -90,10 +94,16 @@ const Navbar = () => {
               )}
               {isAuthenticated && (
                 <motion.li whileHover={{ scale: 1.2 }}>
-                  <button onClick={()=>{
+                  <NavLink to="/inquires"><IoMdMail size={28} className="dark:fill-white fill-fontColor" /></NavLink>
+                </motion.li>
+              )}
+
+              {isAuthenticated && (
+                <motion.li whileHover={{ scale: 1.2 }}>
+                  <button className="flex justify-center items-center" onClick={()=>{
                     localStorage.removeItem("token");
                     setIsAuthenticated(false);
-                  }}>Log Out</button>
+                  }}><IoIosLogOut size={28} className="dark:fill-white fill-fontColor" /></button>
                 </motion.li>
               )}
             </ul>

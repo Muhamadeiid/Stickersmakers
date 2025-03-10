@@ -16,23 +16,23 @@ const ProductsPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(8);
 
-  // Use the Wishlist Context
   const { addToWishlist, removeFromWishlist, isProductInWishlist } =
     useContext(WishlistContext);
 
-  useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/showproducts")
-      .then((res) => {
-        const productsWithParsedImage = res.data.Products.map((product) => ({
-          ...product,
-          image: JSON.parse(product.image),
-        }));
-        setProducts(productsWithParsedImage);
-        setFilteredProducts(productsWithParsedImage);
-      })
-      .catch((error) => console.error("API Error:", error));
-  }, []);
+    useEffect(() => {
+      axios
+        .get("http://127.0.0.1:8000/api/showproducts")
+        .then((res) => {
+          const productsWithParsedImage = res.data.Products.map((product) => ({
+            ...product,
+            image: JSON.parse(product.image),
+          })).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); 
+    
+          setProducts(productsWithParsedImage);
+          setFilteredProducts(productsWithParsedImage);
+        })
+        .catch((error) => console.error("API Error:", error));
+    }, []);
 
   useEffect(() => {
     if (category === "All") {
@@ -82,7 +82,7 @@ const ProductsPage = () => {
                 Laptop Skin
               </label>
             </div>
-            <div onClick={() => setCategory("Keyboard Sticker")} className="cat">
+            <div onClick={() => setCategory("Keyboard Skin")} className="cat">
               <input type="radio" name="category" id="keyboard-sticker" />
               <label className="checkmark" htmlFor="keyboard-sticker">
                 Keyboard Sticker
@@ -97,15 +97,15 @@ const ProductsPage = () => {
           </div>
         </div>
         <div className="md:w-9/12 w-full flex flex-col justify-center items-center gap-10">
-          <h1 className="text-fontColor font-bold text-2xl dark:text-white">Hello</h1>
+          <h1 className="text-fontColor font-bold md:text-3xl text-xl dark:text-white text-center">Explore Our Most Popular Products!</h1>
 
           <div className="products w-full flex flex-wrap gap-4 mx-auto justify-center text-center">
             {currentItems.map((item) => (
               <div
-                className="card dark:bg-darkColor dark:border dark:border-gray-700 dark:rounded group w-[280px] h-[380px] sm:w-[234px] sm:h-[320px] gap-4 p-4 shadow rounded-sm flex flex-col items-center"
+                className="card dark:bg-darkColor dark:border dark:border-gray-700 dark:rounded group w-[280px] h-[420px] sm:w-[234px] sm:h-[320px] gap-4 p-4 shadow rounded-sm flex flex-col items-center"
                 key={item.id}
               >
-                <div className="w-full h-[150px] relative overflow-hidden">
+                <div className="w-full h-[200px] relative overflow-hidden">
                   <div className="onhover translate-y-full group-hover:translate-y-0  bg-opacity-70 bg-black  transition-all duration-500  absolute w-full h-full flex gap-2 justify-center items-center">
                     <button onClick={() => handleWishlistClick(item)}>
                       {isProductInWishlist(item.id) ? (
@@ -121,23 +121,23 @@ const ProductsPage = () => {
                     </button>
                   </div>
                   <img
-                    className="w-full h-[150px] object-cover"
+                    className="w-full h-full object-contain"
                     src={`http://127.0.0.1:8000${item.image.url}`}
                     alt={item.name}
                   />
                 </div>
-                <h1 className="text-fontColor dark:text-white font-bold text-sm">
+                <h1 className="text-fontColor h-6 dark:text-white font-bold text-sm">
                   {item.name}
                 </h1>
                 <h1 className="text-fontColor dark:text-white font-normal text-sm">
                   {item.category}
                 </h1>
-                <h1 className="text-fontColor dark:text-white font-bold text-xs">
+                <h1 className="text-fontColor dark:text-white font-bold text-xs line-clamp-2 overflow-clip">
                   {item.description}
                 </h1>
-                <h2 className="text-[#2DA5F3] font-bold text-sm self-start">
+                {/* <h2 className="text-[#2DA5F3] font-bold text-sm self-start">
                   {item.price}
-                </h2>
+                </h2> */}
               </div>
             ))}
           </div>
