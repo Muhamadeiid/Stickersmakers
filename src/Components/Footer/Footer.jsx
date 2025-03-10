@@ -17,7 +17,7 @@ const Footer = () => {
             </Link>
           </div>
           <div className="footer-col">
-            <h3>Custom Print Store</h3>
+            <h3>Where You Can Find Us</h3>
             <div className="flex w-full gap-8">
               <Link to="https://www.facebook.com/stickersmakers1"><FaFacebookSquare
                 className="cursor-pointer"

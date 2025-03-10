@@ -78,28 +78,28 @@ const AboutPage = () => {
       </section>
       <section className="w-full text-fontColor flex flex-col gap-10 md:flex-row md:justify-evenly justify-center items-center dark:text-white dark:bg-darkColor md:px-20 py-12 md:py-40">
         <div className="flex flex-col gap-12 md:w-1/3 w-full px-4">
-          <h1 className=" text-start text-3xl font-bold">Best Quality</h1>
+          <h1 className=" text-start text-3xl font-bold">Why Stickers Makers!</h1>
           <div className="flex gap-16">
             <div className="flex flex-col gap-4">
-              <h6>Personal Gifts</h6>
-              <h6>Ocassional Gifts</h6>
-              <h6> Corporate Gifts</h6>
+              <h6>Best Quality</h6>
+              <h6>Besti Prices</h6>
+              <h6>Customized Designs</h6>
             </div>
             <div className="flex flex-col gap-4">
-              <h6>Couple T-shirts</h6>
-              <h6>Wedding Package</h6>
-              <h6>Coraporate Gifts</h6>
+              <h6>Premium Product</h6>
+              <h6>Service You Deserve</h6>
+              <h6>Easy To Clean</h6>
             </div>
           </div>
         </div>
         <div className="md:w-1/3 w-full px-4 flex flex-col gap-16 font-bold">
           <div className="flex gap-6 justify-start items-center">
             <MdArrowRight className="text-mainColor" size={24} />
-            <h4>We Can Custom Design Your ideas</h4>
+            <h4>We are commited to deliver best quality for best pricies</h4>
           </div>
           <div className="flex gap-6 justify-start items-center">
             <MdArrowRight className="text-mainColor" size={24} />
-            <h4>We Offer Discounts and Coupons</h4>
+            <h4>Products which are made only out of Love and Respect</h4>
           </div>
         </div>
       </section>

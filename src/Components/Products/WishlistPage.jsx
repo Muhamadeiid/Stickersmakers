@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { WishlistContext } from "../Context/WishlistContext";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import { FaHeart, FaRegHeart } from "react-icons/fa"; // Import the filled heart icon
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { FaHeart, FaRegHeart } from "react-icons/fa"; 
+import { Link } from "react-router-dom"; 
 
 const WishlistPage = () => {
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
@@ -41,15 +41,13 @@ const WishlistPage = () => {
                     {item.description}
                   </h1>
 
-                  {/* Go to Single Product Page Button */}
                   <Link
-                    to={`/products/${item.id}`} // Link to the single product page
+                    to={`/products/${item.id}`} 
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm text-center transition-colors"
                   >
                     View Product
                   </Link>
 
-                  {/* Remove from Wishlist Button */}
                   <button
                     className="w-full bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm text-white mt-2 transition-colors"
                     onClick={() => removeFromWishlist(item.id)}
