@@ -73,6 +73,16 @@ const Homepage = () => {
     <div className=" dark:bg-darkColor -z-20">
       <Navbar />
       <section className="hero w-full h-[80vh] mb-20 bg-gradient-to-l from-slate-400 to-slate-200 dark:from-slate-700 dark:to-slate-900 relative">
+        <div className="px-6 sm:px-10 md:px-20 py-20 sm:py-30 md:py-40">
+          <h1 className="text-fontColor text-3xl md:text-4xl lg:text-5xl font-bold max-w-[300px] sm:max-w-[400px] md:max-w-[600px] lg:max-w-[900px] leading-tight tracking-tighter animate-fadeIn">
+            Turn Your Passion into Art
+            <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-400">
+              Personalize Your World with Us
+            </span>
+          </h1>
+        </div>
+
         <img src={cat} alt="" className="w-60 absolute right-8 top-16" />
         <img
           src={onepiece}
@@ -238,7 +248,6 @@ const Homepage = () => {
           </motion.div>
         </div>
       </section>
-      <Contact />
       <Footer />
     </div>
   );
