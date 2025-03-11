@@ -135,7 +135,7 @@ const Homepage = () => {
           className="w-60 absolute right-[160px] bottom-[10px]"
         />
       </section>
-      <section className="features dark:bg-darkColor flex flex-col items-center gap-20 justify-center mb-20">
+      <section className="features dark:bg-darkColor flex flex-col items-center gap-20 justify-center mb-10 md:mb-20">
         <div className="flex flex-col justify-center items-center">
           <h1 className="sm:text-4xl text-2xl dark:text-white font-bold mb-8 text-fontColor">
             Our Featured Products
@@ -177,15 +177,15 @@ const Homepage = () => {
           ))}
         </div>
       </section>
-      <section className="relative h-[50vh] w-full bg-[#ededed] mb-24 dark:bg-[#2e2e2e]">
+      <section className="relative h-[40vh] w-full md:bg-[#ededed] mb-12 md:mb-24 dark:bg-slate-800 ">
         <div className="absolute trying w-full h-full"></div>
-        <div className="absolute  py-[160px] px-[100px] h-full w-full flex justify-center items-center ">
-          <div className="sm:w-1/2 pl-2 flex flex-col gap-4 text-white dark:text-white">
-            <h3 className=" font-bold text-lg sm:text-2xl ">DON'T MISS OUT!</h3>
-            <h1 className=" font-bold text-2xl sm:text-4xl ">
+        <div className="absolute py-[60px] md:py-[20px] px-[50px] md:px-[100px] h-full w-full flex justify-center items-center ">
+          <div className="md:w-1/2 pl-2 flex flex-col gap-4 text-white dark:text-white">
+            <h3 className="dark:text-white text-fontColor md:text-white font-bold text-lg md:text-2xl ">DON'T MISS OUT!</h3>
+            <h1 className="dark:text-white text-fontColor md:text-white font-bold text-2xl md:text-4xl ">
               Crafted for You
             </h1>
-            <p className=" font-bold ">
+            <p className="dark:text-white text-fontColor md:text-white font-bold ">
               Join Thousands of Happy Customers. Find Your Favorite Today!
             </p>
             <button

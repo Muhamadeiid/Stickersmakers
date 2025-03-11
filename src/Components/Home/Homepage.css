@@ -1,11 +1,4 @@
-.trying { 
-  background-image: url('./../../Images/harry potter 2.jpg'); 
-  background-size:cover; 
-  background-position: center;
-  background-attachment: fixed; 
-  background-repeat: no-repeat; 
-  filter: brightness(70%);
-}
+
 * {
   transition: 300ms background;
 }
@@ -42,4 +35,15 @@
 
 .fade-out {
   animation: fadeOut 1s ease-in-out forwards;
+}
+
+@media only screen and (min-width: 768px) {
+  .trying { 
+    background-image: url('./../../Images/harry potter 2.jpg'); 
+    background-size:cover; 
+    background-position: center;
+    background-attachment: fixed; 
+    background-repeat: no-repeat; 
+    filter: brightness(70%);
+  }
 }
