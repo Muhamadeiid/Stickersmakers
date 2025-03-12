@@ -19,7 +19,7 @@ import godfather from "../../Images/the godfather.png";
 import rick from "../../Images/rick&morty.png";
 import pizza from "../../Images/pizza.png";
 import boom from "../../Images/boom.png";
-import hp from "../../Images/harry potter.png";
+import hp from "../../Images/Harry potter.png";
 import captain from "../../Images/captain america.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
