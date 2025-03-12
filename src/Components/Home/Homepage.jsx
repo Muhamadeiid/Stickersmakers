@@ -6,7 +6,7 @@ import hero from "../../Images/Hero Section.jpg";
 import laptop from "../../Images/harry potter 2.jpg";
 import "./Homepage.css";
 import { motion } from "framer-motion";
-import Loki from "../../Images/loki.jpg";
+import Loki from "../../Images/Loki.jpg";
 import Sliding from "./Sliding";
 import cat from "../../Images/cat.png";
 import logo from "../../Images/logo.png";
