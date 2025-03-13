@@ -39,7 +39,7 @@
 
 @media only screen and (min-width: 768px) {
   .trying { 
-    background-image: url('./../../Images/harry potter 2.jpg'); 
+    background-image: url('./../../Images/harry-potter-2.jpg'); 
     background-size:cover; 
     background-position: center;
     background-attachment: fixed; 
