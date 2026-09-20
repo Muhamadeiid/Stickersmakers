@@ -7,6 +7,7 @@ const metadata = {
   "/products": ["Products", "Browse custom stickers, skins, and posters from Stickers Makers."],
   "/about": ["About Us", "Learn about Stickers Makers and our custom design and printing service."],
   "/contact": ["Contact Us", "Contact Stickers Makers to discuss your custom sticker or skin design."],
+  "/custom-order": ["Custom Order", "Request a custom sticker, skin, or poster design from Stickers Makers."],
   "/wishlist": ["Wishlist", "View the products saved to your Stickers Makers wishlist."],
   "/login": ["Admin Login", "Secure administration login for Stickers Makers."],
 };
@@ -16,7 +17,7 @@ export default function RouteMetadata() {
   const key = pathname.startsWith("/products/") ? "/products" : pathname;
   const [title, description] = metadata[key] || ["Page Not Found", "The requested Stickers Makers page could not be found."];
   usePageMetadata(title, description);
-  const privatePage = ["/login", "/wishlist", "/dashboard", "/addproduct", "/inquiries", "/inquires"].includes(pathname);
+  const privatePage = ["/login", "/wishlist", "/dashboard", "/addproduct", "/inquiries", "/inquires", "/custom-orders"].includes(pathname);
   useEffect(() => {
     const robots = document.head.querySelector('meta[name="robots"]');
     if (robots) robots.content = privatePage || !metadata[key] ? "noindex, nofollow" : "index, follow";

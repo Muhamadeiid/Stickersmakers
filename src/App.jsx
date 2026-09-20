@@ -16,6 +16,8 @@ const SingleProduct = lazy(() => import("./Routes/SingleProduct"));
 const Wishlist = lazy(() => import("./Routes/Wishlist"));
 const NotFoundPage = lazy(() => import("./Routes/NotFoundPage"));
 const Inquiries = lazy(() => import("./Routes/DMs"));
+const CustomOrder = lazy(() => import("./Routes/CustomOrder"));
+const CustomOrders = lazy(() => import("./Routes/CustomOrders"));
 
 function App() {
   return (
@@ -26,9 +28,11 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/custom-order" element={<CustomOrder />} />
         <Route path="/dashboard" element={<AuthRoute component={AdminProducts} />} />
         <Route path="/addproduct" element={<AuthRoute component={AddProduct} />} />
         <Route path="/inquiries" element={<AuthRoute component={Inquiries} />} />
+        <Route path="/custom-orders" element={<AuthRoute component={CustomOrders} />} />
         <Route path="/inquires" element={<AuthRoute component={Inquiries} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/wishlist" element={<Wishlist />} />

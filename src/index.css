@@ -129,3 +129,7 @@
 #root > div > footer { margin-top: auto; }
 .site-page { min-height: 100vh; display: flex; flex-direction: column; }
 .site-main { flex: 1; }
+.eyebrow { display: inline-block; color: #c95947; font-size: .78rem; font-weight: 800; letter-spacing: .15em; text-transform: uppercase; }
+.button-primary { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 52px; padding: 13px 24px; border-radius: 12px; background: #172d40; color: #fff; font-weight: 700; box-shadow: 0 10px 24px #172d4026; transition: transform .2s, background .2s; }
+.button-primary:hover { transform: translateY(-2px); background: #294a61; }
+.dark .button-primary { background: #e66b54; }

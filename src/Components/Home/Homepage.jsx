@@ -39,7 +39,7 @@ export default function Homepage() {
               <p>Stickers, skins, and prints with a little more personality. Find the piece that feels like you.</p>
               <div className="hero-actions">
                 <Link className="button-primary" to="/products">Explore products <span aria-hidden="true">↗</span></Link>
-                <Link className="button-text" to="/about">Get to know us</Link>
+                <Link className="button-text" to="/custom-order">Make your own</Link>
               </div>
               <div className="hero-note"><span className="hero-note-dot" /> Designed for your everyday</div>
             </div>
@@ -98,7 +98,7 @@ export default function Homepage() {
               <span className="eyebrow">Bring your idea to life</span>
               <h2 id="cta-title">Got something in mind?</h2>
               <p>Tell us what you are imagining. We would love to help make it real.</p>
-              <Link className="button-primary" to="/contact">Let&apos;s talk <span aria-hidden="true">↗</span></Link>
+              <Link className="button-primary" to="/custom-order">Start a custom order <span aria-hidden="true">↗</span></Link>
             </div>
             <div className="cta-sticker" aria-hidden="true"><span>YOUR IDEA</span><strong>HERE</strong><i>✳</i></div>
           </div>

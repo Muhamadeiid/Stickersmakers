@@ -17,6 +17,7 @@ export default function Footer() {
         <div className="footer-group">
           <h2>Explore</h2>
           <Link to="/products">All products</Link>
+          <Link to="/custom-order">Custom order</Link>
           <Link to="/about">Our story</Link>
           <Link to="/wishlist">Wishlist</Link>
         </div>

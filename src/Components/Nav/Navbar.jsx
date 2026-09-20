@@ -32,8 +32,10 @@ export default function Navbar() {
           <NavLink className={navClass} to="/products" onClick={closeMenu}>Products</NavLink>
           <NavLink className={navClass} to="/about" onClick={closeMenu}>About</NavLink>
           <NavLink className={navClass} to="/contact" onClick={closeMenu}>Contact</NavLink>
+          <NavLink className={navClass} to="/custom-order" onClick={closeMenu}>Custom order</NavLink>
           {isAuthenticated && <NavLink className={navClass} to="/dashboard" onClick={closeMenu}>Dashboard</NavLink>}
           {isAuthenticated && <NavLink className="nav-icon" to="/inquiries" onClick={closeMenu} aria-label="Customer inquiries"><IoMdMail /></NavLink>}
+          {isAuthenticated && <NavLink className={navClass} to="/custom-orders" onClick={closeMenu}>Requests</NavLink>}
           {isAuthenticated && <button className="nav-icon" onClick={logout} aria-label="Log out"><IoIosLogOut /></button>}
         </nav>
         <div className="header-actions">
