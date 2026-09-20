@@ -10,6 +10,13 @@ import { Link } from "react-router-dom";
 import { WishlistContext } from "../Context/wishlist-context";
 
 const ProductsPage = () => {
+  const categories = [
+    { value: "All", label: "Everything", symbol: "✳" },
+    { value: "Sticker", label: "Stickers", symbol: "✦" },
+    { value: "Laptop Skin", label: "Laptop skins", symbol: "▣" },
+    { value: "Keyboard Skin", label: "Keyboard skins", symbol: "⌘" },
+    { value: "Poster", label: "Posters", symbol: "▧" },
+  ];
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [category, setCategory] = useState("All");
@@ -71,50 +78,23 @@ const ProductsPage = () => {
   };
 
   return (
-    <div className="dark:bg-darkColor ">
+    <div className="products-page dark:bg-darkColor ">
       <Navbar />
-      <main className="flex flex-col md:flex-row gap-8 py-14 mx-auto w-11/12 max-w-[1180px] justify-center flex-1">
-        <div className="side-bar w-[250px] flex flex-col gap-4">
-          <h1 className="font-medium text-fontColor leading-6 text-base dark:text-white">Category</h1>
-          <div className="products-btn w-full flex flex-col gap-3 relative ">
-            <div onClick={() => setCategory("All")} className="cat">
-              <input type="radio" name="category" id="all" defaultChecked />
-              <label className="checkmark" htmlFor="all">
-                All
-              </label>
-            </div>
-            <div onClick={() => setCategory("Sticker")} className="cat">
-              <input type="radio" name="category" id="sticker" />
-              <label className="checkmark" htmlFor="sticker">
-                Stickers
-              </label>
-            </div>
-            <div onClick={() => setCategory("Laptop Skin")} className="cat">
-              <input type="radio" name="category" id="laptop-skin" />
-              <label className="checkmark" htmlFor="laptop-skin">
-                Laptop Skin
-              </label>
-            </div>
-            <div onClick={() => setCategory("Keyboard Skin")} className="cat">
-              <input type="radio" name="category" id="keyboard-sticker" />
-              <label className="checkmark" htmlFor="keyboard-sticker">
-                Keyboard Sticker
-              </label>
-            </div>
-            <div onClick={() => setCategory("Poster")} className="cat">
-              <input type="radio" name="category" id="Poster" />
-              <label className="checkmark" htmlFor="Poster">
-                Poster
-              </label>
-            </div>
-          </div>
-        </div>
-        <div className="md:w-9/12 w-full flex flex-col justify-center items-center gap-10">
+      <main className="products-main">
+        <div className="w-full flex flex-col justify-center items-center gap-10">
           <div className="text-center">
             <span className="text-[#c95947] text-xs font-extrabold uppercase tracking-[.15em]">Made for you</span>
             <h1 className="text-fontColor font-extrabold md:text-4xl text-2xl dark:text-white mt-2">Explore the collection</h1>
             <p className="text-slate-500 dark:text-slate-300 mt-3">Find stickers, skins, and prints that feel like yours.</p>
           </div>
+
+          <section className="category-section" aria-label="Filter products by category">
+            <div className="category-heading"><span>Browse by category</span><span>{filteredProducts.length} {filteredProducts.length === 1 ? "design" : "designs"}</span></div>
+            <div className="category-options">{categories.map((option) => {
+              const count = option.value === "All" ? products.length : products.filter((item) => item.category === option.value).length;
+              return <button key={option.value} type="button" className={`category-chip ${category === option.value ? "is-selected" : ""}`} aria-pressed={category === option.value} onClick={() => setCategory(option.value)}><span className="category-symbol" aria-hidden="true">{option.symbol}</span><span>{option.label}</span><span className="category-count">{count}</span></button>;
+            })}</div>
+          </section>
 
           {loading && <p role="status">Loading products…</p>}
           {error && <p className="text-red-600" role="alert">{error}</p>}
@@ -123,7 +103,7 @@ const ProductsPage = () => {
               <p className="text-4xl" aria-hidden="true">✳</p>
               <h2 className="text-2xl font-bold text-fontColor dark:text-white mt-4">Nothing here just yet</h2>
               <p className="text-slate-500 dark:text-slate-300 mt-3">New designs are on their way. Have an idea in mind? Tell us about it.</p>
-              <Link to="/contact" className="inline-flex mt-6 rounded-xl bg-fontColor px-5 py-3 font-semibold text-white">Get in touch</Link>
+              <Link to="/custom-order" className="inline-flex mt-6 rounded-xl bg-fontColor px-5 py-3 font-semibold text-white">Start a custom order</Link>
             </div>
           )}
 

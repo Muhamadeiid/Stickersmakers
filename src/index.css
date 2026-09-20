@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html { font-family: "Fredoka", ui-rounded, system-ui, sans-serif; }
+body, button, input, select, textarea { font-family: "Fredoka", ui-rounded, system-ui, sans-serif; }
+
 @layer components {
   header nav ul li {
     @apply text-center h-full;
