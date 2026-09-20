@@ -1,4 +1,3 @@
-import React from 'react'
 import SinglePorductPage from '../Components/Products/SingleProductPage'
 
 const SingleProduct = () => {

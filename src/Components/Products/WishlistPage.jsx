@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
-import { WishlistContext } from "../Context/WishlistContext";
+import { useContext } from "react";
+import { WishlistContext } from "../Context/wishlist-context";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import { FaHeart, FaRegHeart } from "react-icons/fa"; 
+import { FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom"; 
+import { getProductImageUrl } from "../../lib/products";
 
 const WishlistPage = () => {
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
@@ -27,8 +28,10 @@ const WishlistPage = () => {
                   <div className="w-full h-[200px] relative overflow-hidden">
                     <img
                       className="w-full h-[180px] object-cover"
-                      src={`http://127.0.0.1:8000${item.image.url}`}
+                      src={getProductImageUrl(item)}
                       alt={item.name}
+                      loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <h1 className="text-fontColor h-6 font-bold text-sm dark:text-white">

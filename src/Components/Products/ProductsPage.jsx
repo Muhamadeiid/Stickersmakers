@@ -1,37 +1,46 @@
-import React, { useEffect, useState, useContext } from "react";
+import { useEffect, useMemo, useState, useContext } from "react";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import axios from "axios";
+import api from "../../lib/api";
+import { getProductImageUrl, normalizeProduct } from "../../lib/products";
 import "./products.css";
 import { FaRegHeart, FaHeart } from "react-icons/fa"; // Import both outline and filled heart icons
-import { AiOutlineShoppingCart } from "react-icons/ai";
 import { FiEye } from "react-icons/fi";
 import { Link } from "react-router-dom";
-import { WishlistContext } from "../Context/WishlistContext"; // Import the Wishlist Context
+import { WishlistContext } from "../Context/wishlist-context";
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [category, setCategory] = useState("All");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(8);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const itemsPerPage = 8;
 
   const { addToWishlist, removeFromWishlist, isProductInWishlist } =
     useContext(WishlistContext);
 
     useEffect(() => {
-      axios
-        .get("http://127.0.0.1:8000/api/showproducts")
+      const controller = new AbortController();
+      api
+        .get("/showproducts", { signal: controller.signal })
         .then((res) => {
-          const productsWithParsedImage = res.data.Products.map((product) => ({
-            ...product,
-            image: JSON.parse(product.image),
-          })).sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); 
+          const productsWithParsedImage = (res.data.Products || [])
+            .map(normalizeProduct)
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
     
           setProducts(productsWithParsedImage);
           setFilteredProducts(productsWithParsedImage);
         })
-        .catch((error) => console.error("API Error:", error));
+        .catch((requestError) => {
+          if (requestError.code !== "ERR_CANCELED") {
+            setError("Products are temporarily unavailable. Please try again later.");
+          }
+        })
+        .finally(() => setLoading(false));
+
+      return () => controller.abort();
     }, []);
 
   useEffect(() => {
@@ -45,7 +54,11 @@ const ProductsPage = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = useMemo(
+    () => filteredProducts.slice(indexOfFirstItem, indexOfLastItem),
+    [filteredProducts, indexOfFirstItem, indexOfLastItem],
+  );
+  const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -99,6 +112,9 @@ const ProductsPage = () => {
         <div className="md:w-9/12 w-full flex flex-col justify-center items-center gap-10">
           <h1 className="text-fontColor font-bold md:text-3xl text-xl dark:text-white text-center">Explore Our Most Popular Products!</h1>
 
+          {loading && <p role="status">Loading products…</p>}
+          {error && <p className="text-red-600" role="alert">{error}</p>}
+
           <div className="products w-full flex flex-wrap gap-4 mx-auto justify-center text-center">
             {currentItems.map((item) => (
               <div
@@ -122,8 +138,12 @@ const ProductsPage = () => {
                   </div>
                   <img
                     className="w-full h-full object-contain"
-                    src={`http://127.0.0.1:8000${item.image.url}`}
+                    src={getProductImageUrl(item)}
                     alt={item.name}
+                    loading="lazy"
+                    decoding="async"
+                    width="202"
+                    height="200"
                   />
                 </div>
                 <h1 className="text-fontColor h-6 dark:text-white font-bold text-sm">
@@ -150,7 +170,7 @@ const ProductsPage = () => {
             >
               Previous
             </button>
-            {Array.from({ length: Math.ceil(filteredProducts.length / itemsPerPage) }).map((_, index) => (
+            {Array.from({ length: totalPages }).map((_, index) => (
               <button
                 key={index + 1}
                 onClick={() => paginate(index + 1)}
@@ -163,7 +183,7 @@ const ProductsPage = () => {
             ))}
             <button
               onClick={() => paginate(currentPage + 1)}
-              disabled={currentPage === Math.ceil(filteredProducts.length / itemsPerPage)}
+              disabled={currentPage >= totalPages}
               className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
             >
               Next

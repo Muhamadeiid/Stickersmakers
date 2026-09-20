@@ -1,6 +1,6 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { FaRegHeart } from "react-icons/fa";
-import { WishlistContext } from "../Context/WishlistContext";
+import { WishlistContext } from "./wishlist-context";
 
 const WishlistIcon = () => {
   const { wishlist } = useContext(WishlistContext); 

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import axios from "axios";
+import api from "../../lib/api";
+import { getProductImageUrl, normalizeProduct } from "../../lib/products";
 import { useNavigate, Link } from "react-router-dom";
 
 const Showproducts = () => {
@@ -18,38 +19,32 @@ const Showproducts = () => {
   const totalPages = Math.ceil(products.length / itemsPerPage);
 
   useEffect(() => {
-    axios
-      .get("http://127.0.0.1:8000/api/showproducts", { withCredentials: true })
+    api
+      .get("/showproducts", { withCredentials: true })
       .then((res) => {
-        const productsWithParsedImage = res.data.Products.map((product) => ({
-          ...product,
-          image: JSON.parse(product.image),
-        }));
+        const productsWithParsedImage = (res.data.Products || []).map(normalizeProduct);
         setProducts(productsWithParsedImage);
       })
       .catch(() => {
         navigate("/login");
       });
-  }, []);
+  }, [navigate]);
 
   const handleRemove = (id) => {
-    axios
+    if (!window.confirm("Delete this product permanently?")) return;
+
+    api
       .post(
-        `http://127.0.0.1:8000/api/deleteproduct/${id}`,
+        `/deleteproduct/${id}`,
         {},
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
+        {},
       )
-      .then((res) => {
-        console.log(res.data);
+      .then(() => {
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== id)
         );
       })
-      .catch((error) => {
+      .catch(() => {
         alert("Failed to delete product. Please try again.");
       });
   };
@@ -93,7 +88,7 @@ const Showproducts = () => {
             <tbody>
               {paginatedProducts.map((item, id) => (
                 <tr
-                  key={id}
+                  key={item.id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
                 >
                   <td className="p-4 text-center">
@@ -116,26 +111,27 @@ const Showproducts = () => {
                   <td className="p-4 text-center">
                     <div className="flex justify-center">
                       <img
-                        src={`http://127.0.0.1:8000${item.image?.url || ""}`}
+                        src={getProductImageUrl(item)}
                         className="w-16 md:w-32 max-w-[150px] max-h-[150px] rounded object-fit"
-                        alt="Product Image"
+                        alt={item.name}
+                        loading="lazy"
                       />
                     </div>
                   </td>
                   <td className="px-6 py-4 text-center">
                     <div className="flex gap-4 justify-center items-center h-full">
-                      <a
+                      <button
                         onClick={() => handleRemove(item.id)}
                         className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
                       >
                         Remove
-                      </a>
-                      <a
+                      </button>
+                      <button
                         onClick={() => handleEdit(item)}
                         className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
                       >
                         Edit
-                      </a>
+                      </button>
                     </div>
                   </td>
                 </tr>
@@ -147,7 +143,7 @@ const Showproducts = () => {
         <div className="md:hidden space-y-4">
           {paginatedProducts.map((item, id) => (
             <div
-              key={id}
+              key={item.id}
               className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md"
             >
               <div className="flex flex-col space-y-2">
@@ -173,24 +169,25 @@ const Showproducts = () => {
                 </div>
                 <div className="flex justify-center">
                   <img
-                    src={`http://127.0.0.1:8000${item.image?.url || ""}`}
+                    src={getProductImageUrl(item)}
                     className="w-32 md:w-32 max-w-[150px] max-h-[150px] rounded object-fit"
-                    alt="Product Image"
+                    alt={item.name}
+                    loading="lazy"
                   />
                 </div>
                 <div className="flex justify-center gap-4">
-                  <a
+                  <button
                     onClick={() => handleRemove(item.id)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
                   >
                     Remove
-                  </a>
-                  <a
+                  </button>
+                  <button
                     onClick={() => handleEdit(item)}
                     className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
                   >
                     Edit
-                  </a>
+                  </button>
                 </div>
               </div>
             </div>
@@ -207,14 +204,14 @@ const Showproducts = () => {
           </button>
 
           <span className="text-gray-700 dark:text-gray-300 font-semibold">
-            Page {currentPage} of {totalPages}
+            Page {currentPage} of {Math.max(totalPages, 1)}
           </span>
 
           <button
             onClick={() =>
               setCurrentPage((prev) => Math.min(prev + 1, totalPages))
             }
-            disabled={currentPage === totalPages}
+            disabled={currentPage >= totalPages}
             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300 disabled:opacity-50"
           >
             Next

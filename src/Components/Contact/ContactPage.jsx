@@ -1,14 +1,13 @@
-import React, { useState } from "react";
-import Navbar from "../Nav/Navbar";
-import Footer from "../Footer/Footer";
+import { useState } from "react";
 import { IoCall } from "react-icons/io5";
 import { FaEnvelope } from "react-icons/fa";
 import { motion } from "framer-motion";
-import axios from "axios";
+import api from "../../lib/api";
 
 const ContactPage = () => {
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -25,9 +24,10 @@ const ContactPage = () => {
     e.preventDefault();
     setErrors({});
     setSuccessMessage("");
+    setSubmitting(true);
 
-    axios
-      .post("http://127.0.0.1:8000/api/inquire", formData)
+    api
+      .post("/inquire", formData)
       .then((response) => {
         setSuccessMessage(response.data.message);
         setFormData({ name: "", phone: "", message: "" });
@@ -36,9 +36,10 @@ const ContactPage = () => {
         if (error.response?.status === 422) {
           setErrors(error.response.data.errors);
         } else {
-          console.error("Submission Error:", error);
+          setErrors({ form: ["Unable to send your message right now. Please try again."] });
         }
-      });
+      })
+      .finally(() => setSubmitting(false));
   };
   return (
     <>
@@ -98,15 +99,19 @@ const ContactPage = () => {
                 value={formData.name}
                 onChange={handleChange}
                 autoComplete="off"
+                required
+                maxLength="100"
               />
               {errors.name && <p className="text-red-500">{errors.name[0]}</p>}
               <input
-                type="text"
+                type="tel"
                 placeholder="Your Phone Number"
                 name="phone"
                 value={formData.phone}
                 onChange={handleChange}
                 autoComplete="off"
+                required
+                maxLength="30"
               />
               {errors.phone && (
                 <p className="text-red-500">{errors.phone[0]}</p>
@@ -117,11 +122,14 @@ const ContactPage = () => {
                 onChange={handleChange}
                 className=""
                 placeholder="Leave a comment..."
+                required
+                maxLength="2000"
               />
               {errors.message && (
                 <p className="text-red-500">{errors.message[0]}</p>
               )}
-              <input type="submit" value="Send Message" />
+              {errors.form && <p className="text-red-500" role="alert">{errors.form[0]}</p>}
+              <input type="submit" value={submitting ? "Sending…" : "Send Message"} disabled={submitting} />
               {successMessage && (
                 <p className="text-green-600 mb-2">{successMessage}</p>
               )}

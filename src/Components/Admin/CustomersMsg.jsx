@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../../lib/api';
 import Navbar from '../Nav/Navbar';
 import Footer from '../Footer/Footer';
 
@@ -15,15 +15,14 @@ export default function InquiryForm() {
   const fetchInquiries = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/showInquiries');
+      const response = await api.get('/showInquiries');
       // Preserve the `done` status from the database
       const inquiriesWithStatus = response.data.data.map(inquiry => ({
         ...inquiry,
         done: inquiry.done === 1, // Convert `done` from MySQL (1 or 0) to boolean (true or false)
       }));
       setInquiries(inquiriesWithStatus);
-    } catch (error) {
-      console.error('Error fetching inquiries:', error);
+    } catch {
       setError('Failed to fetch inquiries');
     } finally {
       setLoading(false);
@@ -32,7 +31,7 @@ export default function InquiryForm() {
 
   const toggleDone = async (id, done) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/inquiries/${id}/status`, {
+      const response = await api.post(`/inquiries/${id}/status`, {
         done: done ? 0 : 1,
       });
       if (response.status === 200) {
@@ -44,22 +43,20 @@ export default function InquiryForm() {
       } else {
         setError('Failed to update status');
       }
-    } catch (error) {
-      console.error('Error updating status:', error);
+    } catch {
       setError('Failed to update status');
     }
   };
 
   const clearDoneOrders = async () => {
     try {
-      const response = await axios.delete('http://127.0.0.1:8000/api/inquiries/clear-done');
+      const response = await api.delete('/inquiries/clear-done');
       if (response.status === 200) {
         setInquiries((prevInquiries) => prevInquiries.filter((inquiry) => !inquiry.done));
       } else {
         setError('Failed to clear done orders');
       }
-    } catch (error) {
-      console.error('Error clearing done orders:', error);
+    } catch {
       setError('Failed to clear done orders');
     }
   };
@@ -69,6 +66,9 @@ export default function InquiryForm() {
       <Navbar />
       <div className="p-4 md:p-8 max-w-6xl mx-auto">
         <h1 className="text-3xl md:text-5xl font-black mb-6 md:mb-10 text-center text-fontColor dark:text-white">Recent Inquiries</h1>
+
+        {loading && <p className="text-center" role="status">Loading inquiries…</p>}
+        {error && <p className="text-center text-red-600" role="alert">{error}</p>}
 
 
         <div className="hidden md:block overflow-x-auto shadow-xl rounded-xl">

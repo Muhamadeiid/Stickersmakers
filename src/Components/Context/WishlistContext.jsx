@@ -1,4 +1,6 @@
-import React, { createContext, useState, useEffect } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import PropTypes from "prop-types";
+import { WishlistContext } from "./wishlist-context";
 
 // Load wishlist from local storage
 const loadWishlistFromLocalStorage = () => {
@@ -25,8 +27,6 @@ const saveWishlistToLocalStorage = (wishlist) => {
 };
 
 // Create the Wishlist Context
-export const WishlistContext = createContext();
-
 // Create the Wishlist Provider
 export const WishlistProvider = ({ children }) => {
   const [wishlist, setWishlist] = useState(loadWishlistFromLocalStorage());
@@ -37,7 +37,7 @@ export const WishlistProvider = ({ children }) => {
   }, [wishlist]);
 
   // Add a product to the wishlist
-  const addToWishlist = (product) => {
+  const addToWishlist = useCallback((product) => {
     setWishlist((prevWishlist) => {
       const existingItem = prevWishlist.find((item) => item.id === product.id);
       if (!existingItem) {
@@ -45,23 +45,32 @@ export const WishlistProvider = ({ children }) => {
       }
       return prevWishlist; 
     });
-  };
+  }, []);
 
-  const removeFromWishlist = (productId) => {
+  const removeFromWishlist = useCallback((productId) => {
     setWishlist((prevWishlist) =>
       prevWishlist.filter((item) => item.id !== productId)
     );
-  };
+  }, []);
 
-  const isProductInWishlist = (productId) => {
+  const isProductInWishlist = useCallback((productId) => {
     return wishlist.some((item) => item.id === productId);
-  };
+  }, [wishlist]);
+
+  const value = useMemo(
+    () => ({ wishlist, addToWishlist, removeFromWishlist, isProductInWishlist }),
+    [wishlist, addToWishlist, removeFromWishlist, isProductInWishlist],
+  );
 
   return (
     <WishlistContext.Provider
-      value={{ wishlist, addToWishlist, removeFromWishlist, isProductInWishlist }}
+      value={value}
     >
       {children}
     </WishlistContext.Provider>
   );
+};
+
+WishlistProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

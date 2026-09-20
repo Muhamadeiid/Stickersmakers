@@ -1,38 +1,41 @@
-import React, { useEffect, useState } from "react";
+import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import Home from "./Routes/Home";
-import About from "./Routes/About";
-import Products from "./Routes/Products";
-import Contact from "./Routes/Contact";
-import Adminproducts from "./Routes/Adminproducts";
-import Addproduct from "./Routes/Addproduct";
-import Register from "./Routes/Register";
 import AuthRoute from "./Routes/AuthRoute";
-import axios from "axios";
-import SingleProduct from "./Routes/SingleProduct";
-import Wishlist from "./Routes/Wishlist";
-import NotFoundPage from "./Routes/NotFoundPage";
-import DMs from "./Routes/DMs";
+import PageLoader from "./Components/Common/PageLoader";
+import RouteMetadata from "./Components/Common/RouteMetadata";
 
-
+const Home = lazy(() => import("./Routes/Home"));
+const About = lazy(() => import("./Routes/About"));
+const Products = lazy(() => import("./Routes/Products"));
+const Contact = lazy(() => import("./Routes/Contact"));
+const AdminProducts = lazy(() => import("./Routes/Adminproducts"));
+const AddProduct = lazy(() => import("./Routes/Addproduct"));
+const Login = lazy(() => import("./Routes/Register"));
+const SingleProduct = lazy(() => import("./Routes/SingleProduct"));
+const Wishlist = lazy(() => import("./Routes/Wishlist"));
+const NotFoundPage = lazy(() => import("./Routes/NotFoundPage"));
+const Inquiries = lazy(() => import("./Routes/DMs"));
 
 function App() {
   return (
-    <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/about" element={<About />} />
-    <Route path="/products" element={<Products />} />
-    <Route path="/contact" element={<Contact />} />
-    <Route path="/dashboard" element={<AuthRoute component={Adminproducts} />} />
-    <Route path="/addproduct" element={<AuthRoute component={Addproduct} />} />
-    <Route path="/inquires" element={<AuthRoute component={DMs} />} />
-    <Route path="/login" element={<Register />} />
-    <Route path="/wishlist" element={<Wishlist />} />
-    <Route path="/products/:id" element={<SingleProduct />} />
-    <Route path="*" element={<NotFoundPage />} />
-
-  </Routes>
+    <Suspense fallback={<PageLoader />}>
+      <RouteMetadata />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/dashboard" element={<AuthRoute component={AdminProducts} />} />
+        <Route path="/addproduct" element={<AuthRoute component={AddProduct} />} />
+        <Route path="/inquiries" element={<AuthRoute component={Inquiries} />} />
+        <Route path="/inquires" element={<AuthRoute component={Inquiries} />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/products/:id" element={<SingleProduct />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }
 

@@ -1,4 +1,3 @@
-import React from "react";
 import { FaEnvelope, FaFacebookSquare } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { AiFillTikTok } from "react-icons/ai";
@@ -19,13 +18,13 @@ const Footer = () => {
           <div className="footer-col">
             <h3>Where You Can Find Us</h3>
             <div className="flex w-full gap-8">
-              <Link to="https://www.facebook.com/stickersmakers1"><FaFacebookSquare
+              <a href="https://www.facebook.com/stickersmakers1" target="_blank" rel="noreferrer" aria-label="Stickers Makers on Facebook"><FaFacebookSquare
                 className="cursor-pointer"
                 size={24}
                 fill="white"
-              /></Link>
-              <Link to="https://www.instagram.com/stickersmakers1/"><FaInstagram className="cursor-pointer" size={24} fill="white" /></Link>
-              <Link><AiFillTikTok className="cursor-pointer" size={24} fill="white" /></Link>
+              /></a>
+              <a href="https://www.instagram.com/stickersmakers1/" target="_blank" rel="noreferrer" aria-label="Stickers Makers on Instagram"><FaInstagram className="cursor-pointer" size={24} fill="white" /></a>
+              <span aria-label="TikTok"><AiFillTikTok className="cursor-pointer" size={24} fill="white" /></span>
               
             </div>
           </div>

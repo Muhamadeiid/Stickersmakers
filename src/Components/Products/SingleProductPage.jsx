@@ -1,42 +1,45 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import axios from "axios";
+import api from "../../lib/api";
+import { getProductImageUrl, normalizeProduct } from "../../lib/products";
 import "./products.css";
 import { FaRegHeart } from "react-icons/fa";
-import { AiOutlineShoppingCart } from "react-icons/ai";
-import { WishlistContext } from "../Context/WishlistContext";
+import { WishlistContext } from "../Context/wishlist-context";
+import usePageMetadata from "../../hooks/usePageMetadata";
 
 const SingleProductPage = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  usePageMetadata(product?.name || "Products", product?.description || "Browse custom stickers, skins, and posters from Stickers Makers.");
 
   const { addToWishlist, removeFromWishlist, isProductInWishlist } =
   useContext(WishlistContext);
   useEffect(() => {
-    axios
-      .get(`http://127.0.0.1:8000/api/singleproduct/${id}`)
+    const controller = new AbortController();
+    api
+      .get(`/singleproduct/${encodeURIComponent(id)}`, { signal: controller.signal })
       .then((res) => {
         if (res.data && res.data.message) {
           const productData = res.data.message;
-          setProduct({
-            ...productData,
-            image: JSON.parse(productData.image), // Parse the image string
-          });
+          setProduct(normalizeProduct(productData));
         } else {
           setError("Product not found"); // Handle case where product is not found
         }
       })
-      .catch((error) => {
-        console.error("API Error:", error);
-        setError("Failed to fetch product details"); // Handle API errors
+      .catch((requestError) => {
+        if (requestError.code !== "ERR_CANCELED") {
+          setError("Failed to fetch product details");
+        }
       })
       .finally(() => {
         setLoading(false); // Set loading to false after the request completes
       });
+
+    return () => controller.abort();
   }, [id]);
   const handleWishlistClick = () => {
     if (isProductInWishlist(product.id)) {
@@ -77,8 +80,9 @@ const SingleProductPage = () => {
         <div className="flex flex-col md:flex-row gap-10 items-center">
           <img
             className="w-[300px] md:w-[500px] h-auto object-cover rounded-lg"
-            src={`http://127.0.0.1:8000${product.image.url}`}
+            src={getProductImageUrl(product)}
             alt={product.name}
+            decoding="async"
           />
           <div className="flex flex-col gap-4 max-w-md ">
             <h1 className="text-fontColor font-bold text-3xl dark:text-white ">

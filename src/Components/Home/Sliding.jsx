@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import first from "../../Images/Backgroundimage.jpg";
 import second from "../../Images/second Background Image.jpg";
 import third from "../../Images/third Background.png";

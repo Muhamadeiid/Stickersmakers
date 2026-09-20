@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import PropTypes from "prop-types";
+import api from "../lib/api";
+import PageLoader from "../Components/Common/PageLoader";
 
 const AuthRoute = ({ component: Component }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -16,8 +18,7 @@ const AuthRoute = ({ component: Component }) => {
       }
 
       try {
-        const response = await axios.get("http://127.0.0.1:8000/api/validate-token", {
-          headers: { Authorization: `Bearer ${token}` },
+        const response = await api.get("/validate-token", {
           withCredentials: true, 
         });
 
@@ -28,10 +29,11 @@ const AuthRoute = ({ component: Component }) => {
           localStorage.removeItem("token");
           navigate("/login");
         }
-      } catch (error) {
-        console.error("Token validation error:", error);
+      } catch {
         setIsAuthenticated(false);
         localStorage.removeItem("token");
+        localStorage.removeItem("name");
+        localStorage.removeItem("isAuthenticated");
         navigate("/login");
       }
     };
@@ -40,10 +42,14 @@ const AuthRoute = ({ component: Component }) => {
   }, [navigate]);
 
   if (isAuthenticated === null) {
-    return <div className="container-loading flex h-screen w-full justify-center items-center"><span className="loader"></span></div>;
+    return <PageLoader />;
   }
 
   return isAuthenticated ? <Component /> : null;
+};
+
+AuthRoute.propTypes = {
+  component: PropTypes.elementType.isRequired,
 };
 
 export default AuthRoute;

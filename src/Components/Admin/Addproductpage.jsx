@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineImageSearch } from "react-icons/md";
-import axios from "axios";
-import logo from "../../Images/logo.png";
+import api from "../../lib/api";
+import { getProductImageUrl, normalizeProduct } from "../../lib/products";
 
 const Addproductpage = () => {
   const navigate = useNavigate();
@@ -21,32 +21,34 @@ const Addproductpage = () => {
 
   const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     if (productToEdit?.id) {
       setLoading(true);
-      axios
-        .get(`http://127.0.0.1:8000/api/singleproduct/${productToEdit.id}`)
+      api
+        .get(`/singleproduct/${productToEdit.id}`)
         .then((response) => {
-          const productData = response.data.message;
-          const updateImg = JSON.parse(productData?.image || "{}");
+          const productData = normalizeProduct(response.data.message);
 
           setFormData({
             name: productData.name,
             category: productData.category,
             description: productData.description,
             price: productData.price,
-            image: updateImg.url || productData.image,
+            image: productData.image.url,
           });
 
-          setLoading(false);
-        });
+        })
+        .catch(() => setError("Unable to load this product."))
+        .finally(() => setLoading(false));
     }
   }, [productToEdit]);
 
   const getImageUrl = () => {
     if (imagePreview) return imagePreview;
-    if (formData.image) return `http://127.0.0.1:8000${formData.image}`;
+    if (formData.image) return getProductImageUrl({ image: formData.image });
     return null;
   };
 
@@ -65,6 +67,8 @@ const Addproductpage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setSubmitting(true);
+    setError("");
 
     const data = new FormData();
     data.append("name", formData.name);
@@ -76,17 +80,14 @@ const Addproductpage = () => {
     }
 
     const url = productToEdit
-      ? `http://127.0.0.1:8000/api/update/${productToEdit.id}`
-      : "http://127.0.0.1:8000/api/addproduct";
+      ? `/update/${productToEdit.id}`
+      : "/addproduct";
 
-    axios
-      .post(url, data, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then(() => navigate("/dashboard"));
+    api
+      .post(url, data)
+      .then(() => navigate("/dashboard"))
+      .catch(() => setError("Unable to save the product. Please check the form and try again."))
+      .finally(() => setSubmitting(false));
   };
 
   return (
@@ -98,13 +99,13 @@ const Addproductpage = () => {
         </p>
         <form
           encType="multipart/form-data"
-          action="http://127.0.0.1:8000/api/addproduct"
           onSubmit={(e) => {
             handleSubmit(e);
           }}
           method="post"
           className="addproduct-form  w-full flex flex-col mx-auto p-8  gap-10 items-start justify-center dark:shadow-darkShadow dark:border-[#2e2e2e] rounded-2xl shadow-md "
         >
+          {error && <p className="text-red-600" role="alert">{error}</p>}
           <div className="w-full  flex flex-col-reverse sm:flex-row justify-start items-start md:gap-0 gap-8">
             <div className="image w-full md:w-1/2 flex flex-col items-start md:justify-start ">
               <h1 className="text-fontColor dark:text-white text-start font-bold  mb-10 md:mb-1">
@@ -203,6 +204,7 @@ const Addproductpage = () => {
               type="submit"
               className=" w-40 h-10 cursor-pointer bg-fontColor text-white px-3 py-1  font-bold rounded-md"
               value={productToEdit ? "Update Product" : "Add Product"}
+              disabled={submitting}
             />
           </div>
         </form>

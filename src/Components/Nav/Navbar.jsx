@@ -4,11 +4,11 @@ import Darkmode from "./Darkmode";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdCloseCircle } from "react-icons/io";
 import { useEffect, useState } from "react";
-import { FaShoppingCart, FaRegHeart } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import logo from "../../Images/logo.png";
 import { motion } from "framer-motion";
 import { useContext } from "react";
-import { WishlistContext } from "../Context/WishlistContext";
+import { WishlistContext } from "../Context/wishlist-context";
 import { IoMdMail } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 
@@ -46,7 +46,7 @@ const Navbar = () => {
       >
         <div>
           <Link to="/">
-            <img src={logo} className="w-48 h-44" alt="Logo" />
+            <img src={logo} className="w-48 h-44 object-contain" alt="Stickers Makers" width="192" height="176" />
           </Link>
         </div>
 
@@ -94,7 +94,7 @@ const Navbar = () => {
               )}
               {isAuthenticated && (
                 <motion.li whileHover={{ scale: 1.2 }}>
-                  <NavLink to="/inquires"><IoMdMail size={28} className="dark:fill-white fill-fontColor" /></NavLink>
+                  <NavLink to="/inquiries" aria-label="Customer inquiries"><IoMdMail size={28} className="dark:fill-white fill-fontColor" /></NavLink>
                 </motion.li>
               )}
 
@@ -102,8 +102,10 @@ const Navbar = () => {
                 <motion.li whileHover={{ scale: 1.2 }}>
                   <button className="flex justify-center items-center" onClick={()=>{
                     localStorage.removeItem("token");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("isAuthenticated");
                     setIsAuthenticated(false);
-                  }}><IoIosLogOut size={28} className="dark:fill-white fill-fontColor" /></button>
+                  }} aria-label="Log out"><IoIosLogOut size={28} className="dark:fill-white fill-fontColor" /></button>
                 </motion.li>
               )}
             </ul>
@@ -114,12 +116,16 @@ const Navbar = () => {
               <IoMdCloseCircle
                 className="block hover:cursor-pointer mr-4"
                 onClick={() => setMenu(false)}
+                role="button"
+                aria-label="Close navigation menu"
                 size={32}
               />
             ) : (
               <RxHamburgerMenu
                 className="md:hidden block hover:cursor-pointer mr-4"
                 onClick={() => setMenu(true)}
+                role="button"
+                aria-label="Open navigation menu"
                 size={32}
               />
             )}

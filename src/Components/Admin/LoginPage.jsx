@@ -1,36 +1,42 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../lib/api";
 import "./Register.css"
-import { div } from "framer-motion/client";
-
-axios.defaults.withCredentials = true;
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true); 
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      
-      navigate("/");
-    } else {
+    if (!token) {
       setIsLoading(false);
+      return;
     }
+
+    api.get('/validate-token', { withCredentials: true })
+      .then((res) => {
+        if (res.data.valid) navigate('/dashboard', { replace: true });
+        else localStorage.removeItem('token');
+      })
+      .catch(() => localStorage.removeItem('token'))
+      .finally(() => setIsLoading(false));
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsSubmitting(true);
     const data = {
       email: email,
       password: password,
     };
 
-    axios.post("http://127.0.0.1:8000/api/login", data)
+    api.post("/login", data, { withCredentials: true })
       .then((res) => {
         if (res.data.status === 200) {
           localStorage.setItem("token", res.data.token);
@@ -41,10 +47,10 @@ export default function AdminLogin() {
           setError(res.data.message);
         }
       })
-      .catch((err) => {
+      .catch(() => {
         setError("An error occurred during login. Please try again.");
-        console.error("Login error:", err);
-      });
+      })
+      .finally(() => setIsSubmitting(false));
   };
 
   
@@ -59,13 +65,14 @@ export default function AdminLogin() {
 
         <form onSubmit={handleLogin}>
           <input
-            type="text"
+            type="email"
             className="w-full p-2 border rounded-md mb-4"
             placeholder="Enter Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             name="email"
             required
+            autoComplete="email"
           />
           <input
             type="password"
@@ -75,13 +82,15 @@ export default function AdminLogin() {
             onChange={(e) => setPassword(e.target.value)}
             name="password"
             required
+            autoComplete="current-password"
           />
-          {error && <p className="text-red-500 text-center">{error}</p>}
+          {error && <p className="text-red-500 text-center" role="alert">{error}</p>}
           <button
             type="submit"
             className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+            disabled={isSubmitting}
           >
-            Login
+            {isSubmitting ? "Signing in…" : "Login"}
           </button>
         </form>
       </div>
