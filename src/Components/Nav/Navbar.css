@@ -22,6 +22,8 @@
 .menu-toggle { display: none !important; }
 
 .dark .site-header { background: #1f2937; border-color: #354354; }
+.dark .site-logo { background: transparent; }
+.dark .site-logo img { filter: invert(1); mix-blend-mode: screen; }
 .dark .nav-link, .dark .nav-icon, .dark .header-actions { color: #e9eff3; }
 .dark .nav-link:hover, .dark .nav-icon:hover, .dark .header-actions > a:hover, .dark .header-actions > button:hover { background: #314155; color: #ffb29c; }
 .dark .nav-link.is-active { background: #375043; color: #e6f7e9; }
