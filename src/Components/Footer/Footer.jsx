@@ -1,70 +1,33 @@
-import { FaEnvelope, FaFacebookSquare } from "react-icons/fa";
-import { FaInstagram } from "react-icons/fa";
-import { AiFillTikTok } from "react-icons/ai";
-import logo from "../../Images/logo.png";
+import { FaFacebookF, FaInstagram } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { IoCall } from "react-icons/io5";
+import "./Footer.css";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <>
-      <footer className="dark:bg-[#1f2937] bg-[#415161] w-full flex justify-center py-10">
-        <div className="z-50 w-11/12 flex sm:flex-row flex-col gap-10 sm:gap-0 sm:flex-wrap">
-          <div className="footer-col h-40 align-top flex justify-start items-start relative sm:-top-10">
-            <Link to="/">
-              <img src={logo} className="w-60 h-full" alt="Logo" />
-            </Link>
-          </div>
-          <div className="footer-col">
-            <h3>Where You Can Find Us</h3>
-            <div className="flex w-full gap-8">
-              <a href="https://www.facebook.com/stickersmakers1" target="_blank" rel="noreferrer" aria-label="Stickers Makers on Facebook"><FaFacebookSquare
-                className="cursor-pointer"
-                size={24}
-                fill="white"
-              /></a>
-              <a href="https://www.instagram.com/stickersmakers1/" target="_blank" rel="noreferrer" aria-label="Stickers Makers on Instagram"><FaInstagram className="cursor-pointer" size={24} fill="white" /></a>
-              <span aria-label="TikTok"><AiFillTikTok className="cursor-pointer" size={24} fill="white" /></span>
-              
-            </div>
-          </div>
-          <div className="footer-col">
-            <h3>Get in Touch with Us</h3>
-            <div className="flex flex-col gap-4">
-              <div className="flex gap-4 text-fontColor">
-                <IoCall size={24} fill="white" />
-                <p className="text-white">+201155180024</p>
-              </div>
-              <div className="flex gap-4 text-fontColor">
-                <FaEnvelope size={24} fill="white" />
-                <p className="text-white">makersstickers@gmail.com</p>
-              </div>
-            </div>
-          </div>
-          <div className="footer-col">
-            <h3>Quick Links</h3>
-            <ul className="flex flex-col gap-2">
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/products">All Products</Link>
-              </li>
-              <li>
-                <Link to="/about">About Us</Link>
-              </li>
-              <li>
-                <Link to="/contact">Contact Us</Link>
-              </li>
-              <li>
-                <Link to="/wishlist">Your Wishlist</Link>
-              </li>
-            </ul>
+    <footer className="site-footer">
+      <div className="footer-inner">
+        <div className="footer-brand">
+          <Link className="footer-wordmark" to="/" aria-label="Stickers Makers home">STICKERS<br />MAKERS<span>✳</span></Link>
+          <p>Little details. Big personality. Made to make your everyday feel more like you.</p>
+          <div className="footer-socials">
+            <a href="https://www.facebook.com/stickersmakers1" target="_blank" rel="noreferrer" aria-label="Facebook"><FaFacebookF /></a>
+            <a href="https://www.instagram.com/stickersmakers1/" target="_blank" rel="noreferrer" aria-label="Instagram"><FaInstagram /></a>
           </div>
         </div>
-      </footer>
-    </>
+        <div className="footer-group">
+          <h2>Explore</h2>
+          <Link to="/products">All products</Link>
+          <Link to="/about">Our story</Link>
+          <Link to="/wishlist">Wishlist</Link>
+        </div>
+        <div className="footer-group">
+          <h2>Need a hand?</h2>
+          <Link to="/contact">Contact us</Link>
+          <a href="tel:+201155180024">+20 115 518 0024</a>
+          <a href="mailto:makersstickers@gmail.com">makersstickers@gmail.com</a>
+        </div>
+      </div>
+      <div className="footer-bottom"><span>© {new Date().getFullYear()} Stickers Makers</span><span>Made with care, made for you.</span></div>
+    </footer>
   );
-};
-
-export default Footer;
+}

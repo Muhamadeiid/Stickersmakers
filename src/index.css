@@ -124,3 +124,8 @@
   }
 }
 
+#root { min-height: 100vh; }
+#root > div { min-height: 100vh; display: flex; flex-direction: column; }
+#root > div > footer { margin-top: auto; }
+.site-page { min-height: 100vh; display: flex; flex-direction: column; }
+.site-main { flex: 1; }

@@ -17,28 +17,13 @@ const Darkmode = () => {
   }, [theme]);
 
   return (
-    <>
-      <MdLightMode
-        className={theme === "light" ? "block cursor-pointer" : "hidden"}
-        fill="#FDB813"
-        size={32}
-        onClick={() => {
-          setTheme("dark");
-        }}
-        role="button"
-        aria-label="Enable dark mode"
-      />
-      <BsFillMoonStarsFill
-        className={theme === "dark" ? "block cursor-pointer " : "hidden"}
-        fill="#F6F1D5"
-        size={32}
-        onClick={() => {
-          setTheme("light");
-        }}
-        role="button"
-        aria-label="Enable light mode"
-      />
-    </>
+    <button
+      type="button"
+      aria-label={theme === "light" ? "Enable dark mode" : "Enable light mode"}
+      onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+    >
+      {theme === "light" ? <MdLightMode fill="#FDB813" size={24} /> : <BsFillMoonStarsFill fill="#F6F1D5" size={24} />}
+    </button>
   );
 };
 

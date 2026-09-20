@@ -1,139 +1,49 @@
+import { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import "./Navbar.css";
-import Darkmode from "./Darkmode";
-import { RxHamburgerMenu } from "react-icons/rx";
-import { IoMdCloseCircle } from "react-icons/io";
-import { useEffect, useState } from "react";
 import { FaRegHeart } from "react-icons/fa";
-import logo from "../../Images/logo.png";
-import { motion } from "framer-motion";
-import { useContext } from "react";
-import { WishlistContext } from "../Context/wishlist-context";
 import { IoMdMail } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
+import { WishlistContext } from "../Context/wishlist-context";
+import Darkmode from "./Darkmode";
+import logo from "../../Images/logo.png";
+import "./Navbar.css";
 
+export default function Navbar() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(localStorage.getItem("token")));
+  const { wishlist } = useContext(WishlistContext);
+  const closeMenu = () => setMenuOpen(false);
+  const navClass = ({ isActive }) => isActive ? "nav-link is-active" : "nav-link";
 
-
-const Navbar = () => {
-  const [menu, setMenu] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
-  const { wishlist } = useContext(WishlistContext); 
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsAuthenticated(!!token); 
-  }, []);
-
-  const showingMenu = () => {
-    if (window.innerWidth > 768) {
-      setMenu(false);
-    }
+  const logout = () => {
+    ["token", "name", "isAuthenticated"].forEach((key) => localStorage.removeItem(key));
+    setIsAuthenticated(false);
+    closeMenu();
   };
 
-  useEffect(() => {
-    window.addEventListener("resize", showingMenu);
-    return () => window.removeEventListener("resize", showingMenu);
-  }, []);
-
   return (
-    <>
-      <header
-        className={
-          menu
-            ? "z-50 w-full h-[15vh] shadow-lg bg-white dark:bg-[#1f2937] dark:text-white flex justify-center items-center gap-8"
-            : "shadow-lg bg-white dark:bg-[#1f2937] dark:text-white h-[15vh] flex justify-center items-center gap-8"
-        }
-      >
-        <div>
-          <Link to="/">
-            <img src={logo} className="w-48 h-44 object-contain" alt="Stickers Makers" width="192" height="176" />
-          </Link>
-        </div>
-
-        <nav className="flex items-center justify-end gap-10 w-11/12 md:w-4/5">
-          <div className="flex gap-8 justify-center items-center text-fontColor dark:text-white">
-            <ul
-              className={
-                menu
-                  ? "absolute z-50 bg-white dark:bg-[#1f2937] dark:text-white flex flex-col items-start pl-4 left-0 top-[15vh] h-[300px] w-full gap-4"
-                  : "md:flex items-center gap-8 hidden"
-              }
-            >
-              <motion.li whileHover={{ scale: 1.2 }}>
-                <NavLink to="/">Home</NavLink>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.2 }}>
-                <NavLink to="/products">All Products</NavLink>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.2 }}>
-                <NavLink to="/about">About</NavLink>
-              </motion.li>
-              <motion.li whileHover={{ scale: 1.2 }}>
-                <NavLink to="/contact">Contact</NavLink>
-              </motion.li>
-
-              {!isAuthenticated && (
-                <motion.li className="py-4" whileHover={{ scale: 1.2 }}>
-                  <NavLink className="flex justify-center" to="/wishlist">
-                    <div className="relative w-fit">
-                      <FaRegHeart size={22} />
-                      {wishlist.length > 0 && (
-                        <sup className="absolute rounded font-bold text-fontColor bg-mainColor flex justify-center items-center w-4 h-4 p-0 -top-4 -right-4">
-                          {wishlist.length}
-                        </sup>
-                      )}
-                    </div>
-                  </NavLink>
-                </motion.li>
-              )}
-
-              {isAuthenticated && (
-                <motion.li whileHover={{ scale: 1.2 }}>
-                  <NavLink to="/dashboard">Dashboard</NavLink>
-                </motion.li>
-              )}
-              {isAuthenticated && (
-                <motion.li whileHover={{ scale: 1.2 }}>
-                  <NavLink to="/inquiries" aria-label="Customer inquiries"><IoMdMail size={28} className="dark:fill-white fill-fontColor" /></NavLink>
-                </motion.li>
-              )}
-
-              {isAuthenticated && (
-                <motion.li whileHover={{ scale: 1.2 }}>
-                  <button className="flex justify-center items-center" onClick={()=>{
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("name");
-                    localStorage.removeItem("isAuthenticated");
-                    setIsAuthenticated(false);
-                  }} aria-label="Log out"><IoIosLogOut size={28} className="dark:fill-white fill-fontColor" /></button>
-                </motion.li>
-              )}
-            </ul>
-
-            <Darkmode />
-
-            {menu ? (
-              <IoMdCloseCircle
-                className="block hover:cursor-pointer mr-4"
-                onClick={() => setMenu(false)}
-                role="button"
-                aria-label="Close navigation menu"
-                size={32}
-              />
-            ) : (
-              <RxHamburgerMenu
-                className="md:hidden block hover:cursor-pointer mr-4"
-                onClick={() => setMenu(true)}
-                role="button"
-                aria-label="Open navigation menu"
-                size={32}
-              />
-            )}
-          </div>
+    <header className="site-header">
+      <div className="header-inner">
+        <Link className="site-logo" to="/" onClick={closeMenu}><img src={logo} alt="Stickers Makers" /></Link>
+        <nav id="main-navigation" className={menuOpen ? "main-nav is-open" : "main-nav"} aria-label="Main navigation">
+          <NavLink className={navClass} to="/" end onClick={closeMenu}>Home</NavLink>
+          <NavLink className={navClass} to="/products" onClick={closeMenu}>Products</NavLink>
+          <NavLink className={navClass} to="/about" onClick={closeMenu}>About</NavLink>
+          <NavLink className={navClass} to="/contact" onClick={closeMenu}>Contact</NavLink>
+          {isAuthenticated && <NavLink className={navClass} to="/dashboard" onClick={closeMenu}>Dashboard</NavLink>}
+          {isAuthenticated && <NavLink className="nav-icon" to="/inquiries" onClick={closeMenu} aria-label="Customer inquiries"><IoMdMail /></NavLink>}
+          {isAuthenticated && <button className="nav-icon" onClick={logout} aria-label="Log out"><IoIosLogOut /></button>}
         </nav>
-      </header>
-    </>
+        <div className="header-actions">
+          {!isAuthenticated && <Link className="wishlist-link" to="/wishlist" aria-label={`Wishlist, ${wishlist.length} items`}><FaRegHeart />{wishlist.length > 0 && <span>{wishlist.length}</span>}</Link>}
+          <Darkmode />
+          <button className="menu-toggle" onClick={() => setMenuOpen((value) => !value)} aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? "Close menu" : "Open menu"}>
+            {menuOpen ? <IoClose /> : <RxHamburgerMenu />}
+          </button>
+        </div>
+      </div>
+    </header>
   );
-};
-
-export default Navbar;
+}

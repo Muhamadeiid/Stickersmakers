@@ -73,7 +73,7 @@ const ProductsPage = () => {
   return (
     <div className="dark:bg-darkColor ">
       <Navbar />
-      <div className="flex flex-col md:flex-row gap-6 py-10 mx-auto w-11/12 justify-center">
+      <main className="flex flex-col md:flex-row gap-8 py-14 mx-auto w-11/12 max-w-[1180px] justify-center flex-1">
         <div className="side-bar w-[250px] flex flex-col gap-4">
           <h1 className="font-medium text-fontColor leading-6 text-base dark:text-white">Category</h1>
           <div className="products-btn w-full flex flex-col gap-3 relative ">
@@ -110,10 +110,22 @@ const ProductsPage = () => {
           </div>
         </div>
         <div className="md:w-9/12 w-full flex flex-col justify-center items-center gap-10">
-          <h1 className="text-fontColor font-bold md:text-3xl text-xl dark:text-white text-center">Explore Our Most Popular Products!</h1>
+          <div className="text-center">
+            <span className="text-[#c95947] text-xs font-extrabold uppercase tracking-[.15em]">Made for you</span>
+            <h1 className="text-fontColor font-extrabold md:text-4xl text-2xl dark:text-white mt-2">Explore the collection</h1>
+            <p className="text-slate-500 dark:text-slate-300 mt-3">Find stickers, skins, and prints that feel like yours.</p>
+          </div>
 
           {loading && <p role="status">Loading products…</p>}
           {error && <p className="text-red-600" role="alert">{error}</p>}
+          {!loading && !error && currentItems.length === 0 && (
+            <div className="w-full max-w-xl rounded-2xl border border-slate-200 bg-slate-50 dark:bg-slate-800 dark:border-slate-700 px-8 py-14 text-center">
+              <p className="text-4xl" aria-hidden="true">✳</p>
+              <h2 className="text-2xl font-bold text-fontColor dark:text-white mt-4">Nothing here just yet</h2>
+              <p className="text-slate-500 dark:text-slate-300 mt-3">New designs are on their way. Have an idea in mind? Tell us about it.</p>
+              <Link to="/contact" className="inline-flex mt-6 rounded-xl bg-fontColor px-5 py-3 font-semibold text-white">Get in touch</Link>
+            </div>
+          )}
 
           <div className="products w-full flex flex-wrap gap-4 mx-auto justify-center text-center">
             {currentItems.map((item) => (
@@ -162,7 +174,7 @@ const ProductsPage = () => {
             ))}
           </div>
 
-          <div className="pagination flex gap-2">
+          {totalPages > 1 && <div className="pagination flex gap-2">
             <button
               onClick={() => paginate(currentPage - 1)}
               disabled={currentPage === 1}
@@ -188,9 +200,9 @@ const ProductsPage = () => {
             >
               Next
             </button>
-          </div>
+          </div>}
         </div>
-      </div>
+      </main>
 
       <Footer />
     </ div>
