@@ -1,14 +1,40 @@
 .site-header { position: relative; z-index: 20; background: #fff; border-bottom: 1px solid #e8edf0; }
-.header-inner { width: min(1180px, calc(100% - 48px)); height: 92px; margin-inline: auto; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
-.site-logo { width: 190px; flex-shrink: 0; display: flex; align-items: center; }.site-logo img { width: 100%; height: 82px; object-fit: contain; object-position: left center; transform: scale(1.35); transform-origin: left center; }
-.main-nav { display: flex; align-items: center; gap: clamp(18px, 2.5vw, 36px); margin-left: auto; }
-.nav-link { color: #4b5e6f; font-weight: 600; font-size: .96rem; transition: color .2s; }.nav-link:hover, .nav-link.is-active { color: #172d40; }.nav-link.is-active { position: relative; }.nav-link.is-active::after { content: ""; height: 2px; background: #e66b54; position: absolute; left: 0; right: 0; bottom: -10px; }
-.header-actions { display: flex; align-items: center; gap: 19px; color: #243d50; }.header-actions svg { width: 22px; height: 22px; }.wishlist-link { position: relative; display: inline-flex; }.wishlist-link span { position: absolute; right: -10px; top: -10px; display: grid; place-items: center; min-width: 16px; height: 16px; border-radius: 50%; background: #e66b54; color: #fff; font-size: .65rem; }
-.nav-icon { display: inline-flex; align-items: center; color: #243d50; font-size: 1.35rem; }.menu-toggle { display: none; color: #243d50; }
-.sound-toggle { display: inline-grid; place-items: center; width: 28px; height: 32px; color: #243d50; border-radius: 8px; transition: transform .18s ease, color .18s ease, background .18s ease; }
-.sound-toggle:hover { color: #df7058; background: #fff0e9; transform: rotate(-12deg) scale(1.08); }
-.sound-toggle:focus-visible { outline: 2px solid #df7058; outline-offset: 3px; }
-.dark .sound-toggle { color: #e9eff3; }
-.dark .sound-toggle:hover { color: #ffb29c; background: #3a4757; }
-.dark .site-header { background: #1f2937; border-color: #354354; }.dark .nav-link, .dark .nav-icon, .dark .header-actions, .dark .menu-toggle { color: #e9eff3; }.dark .nav-link:hover, .dark .nav-link.is-active { color: #fff; }
-@media (max-width: 1050px) { .header-inner { width: calc(100% - 36px); height: 76px; }.site-logo { width: 116px; }.site-logo img { height: 64px; }.menu-toggle { display: inline-flex; }.main-nav { display: none; position: absolute; top: 76px; left: 0; right: 0; margin: 0; padding: 18px 24px; background: #fff; box-shadow: 0 20px 25px #172d4024; flex-direction: column; align-items: stretch; gap: 0; }.main-nav.is-open { display: flex; }.main-nav .nav-link, .main-nav .nav-icon { min-height: 46px; display: flex; align-items: center; border-bottom: 1px solid #edf1f3; }.nav-link.is-active::after { display: none; }.dark .main-nav { background: #1f2937; }.dark .main-nav .nav-link, .dark .main-nav .nav-icon { border-color: #354354; } }
+.header-inner { width: min(1220px, calc(100% - 48px)); height: 90px; margin-inline: auto; display: flex; align-items: center; gap: 22px; }
+
+.site-logo { position: relative; display: block; width: 130px; height: 70px; flex: none; overflow: hidden; border-radius: 15px; background: #fff; transition: transform .22s cubic-bezier(.2, 1.4, .4, 1), box-shadow .22s ease; }
+.site-logo img { position: absolute; width: 160px; height: 160px; max-width: none; top: -43px; left: -15px; object-fit: contain; }
+.site-logo:hover { transform: rotate(-5deg) scale(1.06); box-shadow: 0 8px 15px #1d394020; }
+.site-logo:focus-visible { outline: 3px solid #e66b54; outline-offset: 3px; }
+
+.main-nav { display: flex; align-items: center; gap: 4px; margin-left: auto; }
+.nav-link { display: inline-flex; align-items: center; min-height: 42px; padding: 8px 13px; border-radius: 12px; color: #4b5e6f; font-weight: 600; font-size: .95rem; white-space: nowrap; transition: color .2s, background .2s, transform .2s; }
+.nav-link:hover { color: #172d40; background: #f3f6ef; transform: translateY(-2px); }
+.nav-link.is-active { color: #214331; background: #e9f3e9; }
+.nav-icon { display: inline-grid; place-items: center; min-width: 38px; height: 38px; color: #243d50; font-size: 1.35rem; border-radius: 10px; }
+.nav-icon:hover { background: #f3f6ef; color: #e66b54; }
+
+.header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; color: #243d50; }
+.header-actions svg { width: 21px; height: 21px; }
+.header-actions > a, .header-actions > button { position: relative; display: inline-grid; place-items: center; width: 38px; height: 38px; flex: none; border-radius: 11px; transition: background .2s, color .2s, transform .2s; }
+.header-actions > a:hover, .header-actions > button:hover { background: #f3f6ef; color: #e66b54; transform: translateY(-2px) rotate(-5deg); }
+.header-actions > a:focus-visible, .header-actions > button:focus-visible, .nav-link:focus-visible { outline: 3px solid #e66b54; outline-offset: 2px; }
+.wishlist-link span { position: absolute; right: -4px; top: -3px; display: grid; place-items: center; min-width: 16px; height: 16px; border-radius: 50%; background: #e66b54; color: #fff; font-size: .65rem; }
+.menu-toggle { display: none !important; }
+
+.dark .site-header { background: #1f2937; border-color: #354354; }
+.dark .nav-link, .dark .nav-icon, .dark .header-actions { color: #e9eff3; }
+.dark .nav-link:hover, .dark .nav-icon:hover, .dark .header-actions > a:hover, .dark .header-actions > button:hover { background: #314155; color: #ffb29c; }
+.dark .nav-link.is-active { background: #375043; color: #e6f7e9; }
+
+@media (max-width: 1100px) {
+  .header-inner { width: calc(100% - 36px); height: 76px; }
+  .site-logo { width: 108px; height: 58px; }
+  .site-logo img { width: 132px; height: 132px; left: -12px; top: -35px; }
+  .menu-toggle { display: inline-grid !important; }
+  .main-nav { display: none; position: absolute; top: 76px; left: 0; right: 0; margin: 0; padding: 16px 20px 23px; background: #fff; box-shadow: 0 20px 25px #172d4024; flex-direction: column; align-items: stretch; gap: 3px; }
+  .main-nav.is-open { display: flex; }
+  .main-nav .nav-link, .main-nav .nav-icon { min-height: 46px; width: 100%; display: flex; align-items: center; padding-inline: 15px; }
+  .dark .main-nav { background: #1f2937; }
+}
+
+@media (prefers-reduced-motion: reduce) { .site-logo, .nav-link, .header-actions > a, .header-actions > button { transition: none; } }

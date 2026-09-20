@@ -123,11 +123,12 @@ body, button, input, select, textarea { font-family: "Fredoka", ui-rounded, syst
     @apply flex gap-6
   }
   .side-bar .products-btn div label {
-    @apply text-sm font-medium leading-5 font-sans text-fontColor dark:text-white
+    @apply text-sm font-medium leading-5 text-fontColor dark:text-white
   }
 }
 
 #root { min-height: 100vh; }
+#root { font-family: "Fredoka", ui-rounded, system-ui, sans-serif; }
 #root > div { min-height: 100vh; display: flex; flex-direction: column; }
 #root > div > footer { margin-top: auto; }
 .site-page { min-height: 100vh; display: flex; flex-direction: column; }

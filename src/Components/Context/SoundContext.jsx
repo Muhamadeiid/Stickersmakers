@@ -8,26 +8,24 @@ export function SoundProvider({ children }) {
 
   const playClick = useCallback(() => {
     try {
-      const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-      if (!AudioContextClass) return;
-      if (!audioRef.current) audioRef.current = new AudioContextClass();
-      const context = audioRef.current;
-      if (context.state === "suspended") void context.resume();
-      const oscillator = context.createOscillator();
-      const gain = context.createGain();
-      const now = context.currentTime;
-      oscillator.type = "sine";
-      oscillator.frequency.setValueAtTime(620, now);
-      oscillator.frequency.exponentialRampToValueAtTime(340, now + 0.075);
-      gain.gain.setValueAtTime(0.0001, now);
-      gain.gain.exponentialRampToValueAtTime(0.025, now + 0.008);
-      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.08);
-      oscillator.connect(gain).connect(context.destination);
-      oscillator.start(now);
-      oscillator.stop(now + 0.085);
+      if (!audioRef.current) {
+        audioRef.current = new Audio("/sounds/click.wav");
+        audioRef.current.preload = "auto";
+        audioRef.current.volume = 0.8;
+      }
+      audioRef.current.currentTime = 0;
+      void audioRef.current.play().catch(() => {});
     } catch {
       // Audio is optional when a browser or device does not support it.
     }
+  }, []);
+
+  useEffect(() => {
+    const audio = new Audio("/sounds/click.wav");
+    audio.preload = "auto";
+    audio.volume = 0.8;
+    audioRef.current = audio;
+    return () => { audio.pause(); audioRef.current = null; };
   }, []);
 
   useEffect(() => {
