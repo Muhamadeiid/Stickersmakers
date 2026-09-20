@@ -18,15 +18,12 @@ const AuthRoute = ({ component: Component }) => {
       }
 
       try {
-        const response = await api.get("/validate-token", {
-          withCredentials: true, 
-        });
+        const response = await api.get("/check-auth");
 
-        if (response.data.valid) {
+        if (response.data.is_admin) {
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
-          localStorage.removeItem("token");
           navigate("/login");
         }
       } catch {

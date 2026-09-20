@@ -34,11 +34,7 @@ const Showproducts = () => {
     if (!window.confirm("Delete this product permanently?")) return;
 
     api
-      .post(
-        `/deleteproduct/${id}`,
-        {},
-        {},
-      )
+      .delete(`/deleteproduct/${id}`)
       .then(() => {
         setProducts((prevProducts) =>
           prevProducts.filter((product) => product.id !== id)

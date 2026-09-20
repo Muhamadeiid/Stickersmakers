@@ -18,9 +18,9 @@ export default function AdminLogin() {
       return;
     }
 
-    api.get('/validate-token', { withCredentials: true })
+    api.get('/check-auth')
       .then((res) => {
-        if (res.data.valid) navigate('/dashboard', { replace: true });
+        if (res.data.is_admin) navigate('/dashboard', { replace: true });
         else localStorage.removeItem('token');
       })
       .catch(() => localStorage.removeItem('token'))
@@ -38,13 +38,13 @@ export default function AdminLogin() {
 
     api.post("/login", data, { withCredentials: true })
       .then((res) => {
-        if (res.data.status === 200) {
+        if (res.data.status === 200 && res.data.role === 'admin') {
           localStorage.setItem("token", res.data.token);
           localStorage.setItem("name", res.data.username);
           localStorage.setItem('isAuthenticated', 'true');
           navigate("/dashboard");
         } else {
-          setError(res.data.message);
+          setError('This account does not have administrator access.');
         }
       })
       .catch(() => {
