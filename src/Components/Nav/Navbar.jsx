@@ -5,7 +5,9 @@ import { IoMdMail } from "react-icons/io";
 import { IoIosLogOut } from "react-icons/io";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { IoVolumeHighOutline, IoVolumeMuteOutline } from "react-icons/io5";
 import { WishlistContext } from "../Context/wishlist-context";
+import { useSound } from "../Context/sound-state";
 import Darkmode from "./Darkmode";
 import logo from "../../Images/logo.png";
 import "./Navbar.css";
@@ -14,6 +16,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(() => Boolean(localStorage.getItem("token")));
   const { wishlist } = useContext(WishlistContext);
+  const { enabled: soundEnabled, toggleSound } = useSound();
   const closeMenu = () => setMenuOpen(false);
   const navClass = ({ isActive }) => isActive ? "nav-link is-active" : "nav-link";
 
@@ -40,6 +43,7 @@ export default function Navbar() {
         </nav>
         <div className="header-actions">
           {!isAuthenticated && <Link className="wishlist-link" to="/wishlist" aria-label={`Wishlist, ${wishlist.length} items`}><FaRegHeart />{wishlist.length > 0 && <span>{wishlist.length}</span>}</Link>}
+          <button type="button" className="sound-toggle" data-sound-toggle onClick={toggleSound} aria-label={soundEnabled ? "Mute click sounds" : "Enable click sounds"} title={soundEnabled ? "Mute click sounds" : "Enable click sounds"}>{soundEnabled ? <IoVolumeHighOutline /> : <IoVolumeMuteOutline />}</button>
           <Darkmode />
           <button className="menu-toggle" onClick={() => setMenuOpen((value) => !value)} aria-expanded={menuOpen} aria-controls="main-navigation" aria-label={menuOpen ? "Close menu" : "Open menu"}>
             {menuOpen ? <IoClose /> : <RxHamburgerMenu />}

@@ -46,7 +46,7 @@ export default function Homepage() {
             <div className="hero-art" aria-hidden="true">
               <div className="art-orbit art-orbit-one" />
               <div className="art-orbit art-orbit-two" />
-              <div className="art-tile art-tile-main"><img src={cat} alt="" fetchPriority="high" /></div>
+              <div className="art-tile art-tile-main"><img src={cat} alt="" loading="eager" /></div>
               <div className="art-tile art-tile-side"><img src={onepiece} alt="" /></div>
               <div className="art-tile art-tile-small"><img src={pizza} alt="" /></div>
               <span className="art-spark art-spark-one">✳</span>

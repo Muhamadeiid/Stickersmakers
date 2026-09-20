@@ -136,3 +136,29 @@ body, button, input, select, textarea { font-family: "Fredoka", ui-rounded, syst
 .button-primary { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 52px; padding: 13px 24px; border-radius: 12px; background: #172d40; color: #fff; font-weight: 700; box-shadow: 0 10px 24px #172d4026; transition: transform .2s, background .2s; }
 .button-primary:hover { transform: translateY(-2px); background: #294a61; }
 .dark .button-primary { background: #e66b54; }
+
+/* Small, tactile interactions shared across the storefront. */
+.button-primary, .category-chip, .collection-card, .featured-card, .about-product, .custom-order-form, .nav-link, .footer-group a { -webkit-tap-highlight-color: transparent; }
+.button-primary:active, .category-chip:active, .sound-toggle:active, .menu-toggle:active { transform: translateY(2px) scale(.96); }
+.button-primary:focus-visible, .collection-card:focus-visible, .featured-card:focus-visible, .nav-link:focus-visible { outline: 3px solid #e66b54; outline-offset: 4px; }
+.button-primary span[aria-hidden="true"], .collection-arrow { display: inline-block; transition: transform .25s cubic-bezier(.2, 1.5, .4, 1); }
+.button-primary:hover span[aria-hidden="true"], .collection-card:hover .collection-arrow { transform: translate(3px, -3px) rotate(12deg); }
+.eyebrow { position: relative; }
+.eyebrow::after { content: "✳"; display: inline-block; margin-left: .5em; color: #e7ab65; font-size: 1.25em; vertical-align: -.06em; }
+.site-main h1, .site-main h2, .site-main h3 { text-wrap: balance; }
+
+@keyframes sticker-pop { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes sticker-float { 0%, 100% { translate: 0 0; } 50% { translate: 0 -9px; } }
+@keyframes sticker-twinkle { 0%, 100% { scale: 1; rotate: 0deg; } 50% { scale: 1.18; rotate: 18deg; } }
+
+.hero-copy, .about-hero .about-container, .custom-order-intro, .custom-order-form, .products-main > div > .text-center { animation: sticker-pop .55s cubic-bezier(.2, .8, .2, 1) backwards; }
+.collection-card, .about-product { animation: sticker-pop .55s cubic-bezier(.2, .8, .2, 1) backwards; }
+.collection-card:nth-child(2), .about-product:nth-child(2) { animation-delay: .08s; }
+.collection-card:nth-child(3), .about-product:nth-child(3) { animation-delay: .16s; }
+.about-product:nth-child(4) { animation-delay: .24s; }
+.about-product { transition: transform .24s ease, box-shadow .24s ease; }
+.about-product:hover { transform: translateY(-6px) rotate(-1deg); box-shadow: 0 16px 25px #263f4a1c; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}
