@@ -10,6 +10,11 @@ const metadata = {
   "/custom-order": ["Custom Order", "Request a custom sticker, skin, or poster design from Stickers Makers."],
   "/wishlist": ["Wishlist", "View the products saved to your Stickers Makers wishlist."],
   "/login": ["Admin Login", "Secure administration login for Stickers Makers."],
+  "/dashboard": ["Product Dashboard", "Manage Stickers Makers products."],
+  "/addproduct": ["Product Editor", "Add or edit a Stickers Makers product."],
+  "/inquiries": ["Customer Inquiries", "Manage Stickers Makers customer inquiries."],
+  "/inquires": ["Customer Inquiries", "Manage Stickers Makers customer inquiries."],
+  "/custom-orders": ["Custom Requests", "Manage Stickers Makers custom requests."],
 };
 
 export default function RouteMetadata() {

@@ -1,71 +1,84 @@
 import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { FaHeart, FaTrashAlt } from "react-icons/fa";
 import { WishlistContext } from "../Context/wishlist-context";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
-import { FaRegHeart } from "react-icons/fa";
-import { Link } from "react-router-dom"; 
 import { getProductImageUrl } from "../../lib/products";
+import "./wishlist.css";
 
-const WishlistPage = () => {
+export default function WishlistPage() {
   const { wishlist, removeFromWishlist } = useContext(WishlistContext);
 
   return (
-    <div className="dark:bg-darkColor dark:text-white">
+    <div className="site-page wishlist-page">
       <Navbar />
-      <div className="flex gap-6 py-10 mx-auto w-11/12 justify-center">
-        <div className="w-9/12 flex flex-col justify-center items-center gap-10">
-          <h1 className="text-fontColor font-bold text-2xl dark:text-white">Your Wishlist</h1>
-
-          <div className="products w-full flex flex-wrap gap-4 mx-auto justify-center text-center">
-            {wishlist.length === 0 ? (
-              <p className="text-gray-600 text-lg dark:text-white">Your wishlist is empty.</p>
-            ) : (
-              wishlist.map((item) => (
-                <div
-                  className="card dark:bg-darkColor dark:border dark:border-gray-700 dark:rounded group w-[280px] h-[420px] sm:w-[234px] sm:h-[320px] gap-4 p-4 shadow rounded-sm flex flex-col items-center"
-                  key={item.id}
-                >
-                  <div className="w-full h-[200px] relative overflow-hidden">
-                    <img
-                      className="w-full h-[180px] object-cover"
-                      src={getProductImageUrl(item)}
-                      alt={item.name}
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </div>
-                  <h1 className="text-fontColor h-6 font-bold text-sm dark:text-white">
-                    {item.name}
-                  </h1>
-                  <h1 className="text-fontColor font-normal text-sm dark:text-white">
-                    {item.category}
-                  </h1>
-                  <h1 className="text-fontColor font-bold text-xs dark:text-white line-clamp-2 overflow-clip">
-                    {item.description}
-                  </h1>
-
-                  <Link
-                    to={`/products/${item.id}`} 
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg text-sm text-center transition-colors"
-                  >
-                    View Product
-                  </Link>
-
-                  <button
-                    className="w-full bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg text-sm text-white mt-2 transition-colors"
-                    onClick={() => removeFromWishlist(item.id)}
-                  >
-                    Remove From Wishlist <FaRegHeart size={22} className="inline-block mr-2" />
-                  </button>
-                </div>
-              ))
-            )}
+      <main className="site-main wishlist-main">
+        <header className="wishlist-heading">
+          <div>
+            <span className="eyebrow">Saved for later</span>
+            <h1>Your wishlist</h1>
+            <p>Keep your favorite designs together until you are ready.</p>
           </div>
-        </div>
-      </div>
+          <span className="wishlist-total">
+            <FaHeart aria-hidden="true" /> {wishlist.length}{" "}
+            {wishlist.length === 1 ? "favorite" : "favorites"}
+          </span>
+        </header>
+
+        {wishlist.length === 0 ? (
+          <section className="wishlist-empty">
+            <span aria-hidden="true">♡</span>
+            <h2>Nothing saved yet.</h2>
+            <p>Tap the heart on any product and it will appear here.</p>
+            <Link className="button-primary" to="/products">
+              Explore products <span aria-hidden="true">↗</span>
+            </Link>
+          </section>
+        ) : (
+          <section className="wishlist-grid" aria-label="Saved products">
+            {wishlist.map((item) => (
+              <article className="wishlist-card" key={item.id}>
+                <Link className="wishlist-image" to={`/products/${item.id}`}>
+                  <img
+                    src={getProductImageUrl(item)}
+                    alt={item.name}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </Link>
+
+                <div className="wishlist-card-body">
+                  <div className="wishlist-card-meta">
+                    <span>{item.category}</span>
+                    {item.price != null && (
+                      <strong>{Number(item.price).toLocaleString()} EGP</strong>
+                    )}
+                  </div>
+                  <Link to={`/products/${item.id}`}>
+                    <h2>{item.name}</h2>
+                  </Link>
+                  <p>{item.description}</p>
+
+                  <div className="wishlist-actions">
+                    <Link to={`/products/${item.id}`}>
+                      View product <span aria-hidden="true">→</span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={() => removeFromWishlist(item.id)}
+                      aria-label={`Remove ${item.name} from wishlist`}
+                    >
+                      <FaTrashAlt aria-hidden="true" /> Remove
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </section>
+        )}
+      </main>
       <Footer />
     </div>
   );
-};
-
-export default WishlistPage;
+}

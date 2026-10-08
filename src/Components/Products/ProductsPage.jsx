@@ -110,7 +110,7 @@ const ProductsPage = () => {
           <div className="products w-full flex flex-wrap gap-4 mx-auto justify-center text-center">
             {currentItems.map((item) => (
               <div
-                className="card dark:bg-darkColor dark:border dark:border-gray-700 dark:rounded group w-[280px] h-[420px] sm:w-[234px] sm:h-[320px] gap-4 p-4 shadow rounded-sm flex flex-col items-center"
+                className="card dark:bg-darkColor dark:border dark:border-gray-700 dark:rounded group w-[280px] sm:w-[234px] min-h-[370px] gap-3 p-4 shadow rounded-sm flex flex-col items-center"
                 key={item.id}
               >
                 <div className="w-full h-[200px] relative overflow-hidden">
@@ -144,6 +144,7 @@ const ProductsPage = () => {
                 <h1 className="text-fontColor dark:text-white font-normal text-sm">
                   {item.category}
                 </h1>
+                {item.price != null && <p className="text-fontColor dark:text-white font-bold text-sm">{Number(item.price).toLocaleString()} EGP</p>}
                 <h1 className="text-fontColor dark:text-white font-bold text-xs line-clamp-2 overflow-clip">
                   {item.description}
                 </h1>

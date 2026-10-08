@@ -2,6 +2,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../../lib/api";
 import "./Register.css"
+import Navbar from "../Nav/Navbar";
+import Footer from "../Footer/Footer";
+import "./Admin.css";
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -59,14 +62,16 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-96">
-        <h2 className="text-2xl font-bold mb-4 text-center">Admin Login</h2>
+    <div className="site-page admin-page"><Navbar /><main className="site-main admin-login-wrap">
+      <div className="admin-login-card"><span className="eyebrow">Store manager</span>
+        <h1>Welcome back.</h1><p>Sign in to manage your products and customer requests.</p>
 
         <form onSubmit={handleLogin}>
+          <label className="admin-login-label" htmlFor="admin-email">Email</label>
           <input
+            id="admin-email"
             type="email"
-            className="w-full p-2 border rounded-md mb-4"
+            className="w-full p-3 border rounded-md mb-4"
             placeholder="Enter Your Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -74,9 +79,11 @@ export default function AdminLogin() {
             required
             autoComplete="email"
           />
+          <label className="admin-login-label" htmlFor="admin-password">Password</label>
           <input
+            id="admin-password"
             type="password"
-            className="w-full p-2 border rounded-md mb-4"
+            className="w-full p-3 border rounded-md mb-4"
             placeholder="Enter Your Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -87,13 +94,13 @@ export default function AdminLogin() {
           {error && <p className="text-red-500 text-center" role="alert">{error}</p>}
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+            className="button-primary w-full border-0 cursor-pointer"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Signing in…" : "Login"}
           </button>
         </form>
-      </div>
+      </div></main><Footer />
     </div>
   );
 }

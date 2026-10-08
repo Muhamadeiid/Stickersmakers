@@ -91,6 +91,7 @@ const SingleProductPage = () => {
             <h2 className="text-fontColor font-medium text-xl dark:text-white">
               {product.category}
             </h2>
+            {product.price != null && <p className="text-fontColor dark:text-white font-bold text-xl">{Number(product.price).toLocaleString()} EGP</p>}
             <p className="text-fontColor text-sm leading-relaxed dark:text-white ">
               {product.description}
             </p>

@@ -1,228 +1,52 @@
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import Navbar from "../Nav/Navbar";
 import Footer from "../Footer/Footer";
 import api from "../../lib/api";
 import { getProductImageUrl, normalizeProduct } from "../../lib/products";
-import { useNavigate, Link } from "react-router-dom";
+import "./Admin.css";
 
-const Showproducts = () => {
-  const [products, setProducts] = useState([]);
+export default function Dashboard() {
   const navigate = useNavigate();
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
-
-  const paginatedProducts = products.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const totalPages = Math.ceil(products.length / itemsPerPage);
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [page, setPage] = useState(1);
+  const pageSize = 8;
+  const totalPages = Math.max(1, Math.ceil(products.length / pageSize));
 
   useEffect(() => {
-    api
-      .get("/showproducts", { withCredentials: true })
-      .then((res) => {
-        const productsWithParsedImage = (res.data.Products || []).map(normalizeProduct);
-        setProducts(productsWithParsedImage);
-      })
-      .catch(() => {
-        navigate("/login");
-      });
-  }, [navigate]);
+    const controller = new AbortController();
+    api.get("/showproducts", { signal: controller.signal })
+      .then(({ data }) => setProducts((data.Products || []).map(normalizeProduct).reverse()))
+      .catch((requestError) => { if (requestError.code !== "ERR_CANCELED") setError("Could not load products. Refresh the page to try again."); })
+      .finally(() => setLoading(false));
+    return () => controller.abort();
+  }, []);
 
-  const handleRemove = (id) => {
-    if (!window.confirm("Delete this product permanently?")) return;
-
-    api
-      .delete(`/deleteproduct/${id}`)
-      .then(() => {
-        setProducts((prevProducts) =>
-          prevProducts.filter((product) => product.id !== id)
-        );
-      })
-      .catch(() => {
-        alert("Failed to delete product. Please try again.");
-      });
+  const remove = async (product) => {
+    if (!window.confirm(`Delete “${product.name}” permanently?`)) return;
+    setError("");
+    try {
+      await api.delete(`/deleteproduct/${product.id}`);
+      setProducts((current) => current.filter((item) => item.id !== product.id));
+      setPage((current) => Math.min(current, Math.max(1, Math.ceil((products.length - 1) / pageSize))));
+    } catch { setError("Could not delete this product. Please try again."); }
   };
 
-  const handleEdit = (product) => {
-    navigate("/addproduct", { state: { product } });
-  };
-
-  return (
-    <div className="dark:bg-darkColor">
-
-      <Navbar />
-      <div className="p-4">
-        <div className="hidden md:block overflow-x-auto shadow-md sm:rounded-lg">
-          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th scope="col" className="px-6 py-3 text-center">
-                  NO.
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Product Name
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Category
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Description
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Price
-                </th>
-                <th scope="col" className="px-16 py-3 text-center">
-                  Image
-                </th>
-                <th scope="col" className="px-6 py-3 text-center">
-                  Action
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {paginatedProducts.map((item, id) => (
-                <tr
-                  key={item.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
-                >
-                  <td className="p-4 text-center">
-                    {(currentPage - 1) * itemsPerPage + id + 1}
-                  </td>
-                  <td className="p-4 text-center">{item.name}</td>
-                  <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white text-center">
-                    {item.category}
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <div className="flex items-center justify-center">
-                      {item.description}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white text-center">
-                    <div className="flex items-center justify-center">
-                      {item.price}
-                    </div>
-                  </td>
-                  <td className="p-4 text-center">
-                    <div className="flex justify-center">
-                      <img
-                        src={getProductImageUrl(item)}
-                        className="w-16 md:w-32 max-w-[150px] max-h-[150px] rounded object-fit"
-                        alt={item.name}
-                        loading="lazy"
-                      />
-                    </div>
-                  </td>
-                  <td className="px-6 py-4 text-center">
-                    <div className="flex gap-4 justify-center items-center h-full">
-                      <button
-                        onClick={() => handleRemove(item.id)}
-                        className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
-                      >
-                        Remove
-                      </button>
-                      <button
-                        onClick={() => handleEdit(item)}
-                        className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
-        <div className="md:hidden space-y-4">
-          {paginatedProducts.map((item, id) => (
-            <div
-              key={item.id}
-              className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md"
-            >
-              <div className="flex flex-col space-y-2">
-                <div className="flex justify-between">
-                  <span className="font-semibold">NO.</span>
-                  <span>{(currentPage - 1) * itemsPerPage + id + 1}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Product Name</span>
-                  <span>{item.name}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Category</span>
-                  <span>{item.category}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Description</span>
-                  <span>{item.description}</span>
-                </div>
-                <div className="flex justify-between">
-                  <span className="font-semibold">Price</span>
-                  <span>{item.price}</span>
-                </div>
-                <div className="flex justify-center">
-                  <img
-                    src={getProductImageUrl(item)}
-                    className="w-32 md:w-32 max-w-[150px] max-h-[150px] rounded object-fit"
-                    alt={item.name}
-                    loading="lazy"
-                  />
-                </div>
-                <div className="flex justify-center gap-4">
-                  <button
-                    onClick={() => handleRemove(item.id)}
-                    className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
-                  >
-                    Remove
-                  </button>
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="font-medium text-red-600 dark:text-red-500 hover:underline cursor-pointer"
-                  >
-                    Edit
-                  </button>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-center space-x-4 my-6">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300 disabled:opacity-50"
-          >
-            Previous
-          </button>
-
-          <span className="text-gray-700 dark:text-gray-300 font-semibold">
-            Page {currentPage} of {Math.max(totalPages, 1)}
-          </span>
-
-          <button
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
-            disabled={currentPage >= totalPages}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300 disabled:opacity-50"
-          >
-            Next
-          </button>
-        </div>
-
-        <div className="flex justify-center my-6">
-          <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow-md transition-all duration-300">
-            <Link to="/addproduct">Add Product</Link>
-          </button>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
-};
-
-export default Showproducts;
+  return <div className="site-page admin-page"><Navbar /><main className="site-main admin-main">
+    <div className="admin-heading"><div><span className="eyebrow">Store manager</span><h1>Product dashboard</h1><p>Manage the designs your customers see in the shop.</p></div><Link className="button-primary" to="/addproduct">Add product <span aria-hidden="true">↗</span></Link></div>
+    <div className="admin-stats"><div><strong>{products.length}</strong><span>Products</span></div><div><strong>{new Set(products.map((item) => item.category)).size}</strong><span>Categories</span></div><div><strong>{products.filter((item) => item.name.startsWith("Demo ·")).length}</strong><span>Demo products</span></div></div>
+    <div className="admin-shortcuts"><Link to="/custom-orders">Custom requests →</Link><Link to="/inquiries">Customer inquiries →</Link><Link to="/products">View storefront →</Link></div>
+    <div className="admin-list-title"><h2>All products</h2><span>{products.length} total</span></div>
+    {loading && <p role="status">Loading products…</p>}
+    {error && <p className="admin-error" role="alert">{error}</p>}
+    {!loading && !error && products.length === 0 && <div className="admin-empty"><p>No products yet.</p><Link to="/addproduct">Add your first product</Link></div>}
+    <div className="admin-product-grid">{products.slice((page - 1) * pageSize, page * pageSize).map((product) => <article className="admin-product-card" key={product.id}>
+      <img src={getProductImageUrl(product)} alt="" loading="lazy" />
+      <div className="admin-product-details"><div className="admin-product-tags"><span>{product.category}</span>{product.name.startsWith("Demo ·") && <span className="admin-demo-tag">Demo</span>}</div><h3>{product.name}</h3><p>{product.description}</p><strong>{product.price ? `${Number(product.price).toLocaleString()} EGP` : "Price on request"}</strong></div>
+      <div className="admin-card-actions"><button type="button" onClick={() => navigate("/addproduct", { state: { product } })}>Edit</button><button type="button" onClick={() => remove(product)} className="danger">Delete</button></div>
+    </article>)}</div>
+    {totalPages > 1 && <div className="admin-pagination"><button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</button><span>Page {page} of {totalPages}</span><button disabled={page === totalPages} onClick={() => setPage(page + 1)}>Next</button></div>}
+  </main><Footer /></div>;
+}
